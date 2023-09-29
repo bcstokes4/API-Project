@@ -12,6 +12,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      firstName: {
+        type: Sequelize.STRING(25),
+        allowNull: false
+      },
+      lastName: {
+        type: Sequelize.STRING(25),
+        allowNull: false
+      },
       username: {
         type: Sequelize.STRING(30),
         allowNull: false,
@@ -37,8 +45,13 @@ module.exports = {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     });
+    await queryInterface.addIndex('Users', ['firstName', 'lastName'], {
+      unique: true
+    })
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Users');
+
+    await queryInterface.removeIndex('Users',['firstName', 'lastName'])
   }
 };

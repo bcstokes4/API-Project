@@ -21,7 +21,7 @@ const validateLogin = [
       .withMessage('Please provide a password.'),
     handleValidationErrors
   ];
- 
+
 //Log in
 router.post('/', validateLogin, async (req, res, next) => {
     const { credential, password } = req.body
@@ -45,6 +45,8 @@ router.post('/', validateLogin, async (req, res, next) => {
 
     const safeUser = {
         id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
         username: user.username
     }
@@ -69,6 +71,8 @@ router.get('/', (req, res) => {
     if(user) {
         const safeUser = {
             id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
             email: user.email,
             username: user.username
         }
