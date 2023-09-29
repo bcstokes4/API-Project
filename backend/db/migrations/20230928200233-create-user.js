@@ -45,13 +45,13 @@ module.exports = {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     });
-    await queryInterface.addIndex('Users', ['firstName', 'lastName'], {
-      unique: true
-    })
+    // await queryInterface.addIndex('Users', ['firstName', 'lastName'], {
+    //   unique: true
+    // })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+    // await queryInterface.removeIndex('Users',['firstName', 'lastName'])
 
-    await queryInterface.removeIndex('Users',['firstName', 'lastName'])
+    await queryInterface.dropTable('Users');
   }
 };
