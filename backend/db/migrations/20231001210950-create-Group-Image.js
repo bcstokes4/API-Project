@@ -3,34 +3,28 @@ let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
 }
-
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Attendances', {
+    await queryInterface.createTable('GroupImages', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      eventId: {
+      groupId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Events',
+          model: 'Groups',
           key: 'id'
-        },
-        allowNull: false
+        }
       },
-      userId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Users',
-          key: 'id'
-        },
-        allowNull: false
-      },
-      status: {
+      url: {
         type: Sequelize.STRING,
+        allowNull: false
+      },
+      preview: {
+        type: Sequelize.BOOLEAN,
         allowNull: false
       },
       createdAt: {
@@ -43,9 +37,10 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
       }
-    });
-  }, options,
+    }, options);
+  },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Attendances');
+    options.tableName = "GroupImages"
+    await queryInterface.dropTable(options);
   }
 };

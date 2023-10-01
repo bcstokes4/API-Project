@@ -18,6 +18,15 @@ module.exports = {
         private: true,
         city: "New York",
         state: "NY"
+      },
+      {
+        organizerId: 2,
+        name: "Competitive Sleeping League",
+        about: "Bring your pillows, folks. Each week, we take 50,000 pillows into Time Square, build a fort and sleep inside of it for 5 days straight",
+        type: "In person",
+        private: true,
+        city: "New York",
+        state: "NY"
       }
     ], { validate: true });
   },

@@ -3,21 +3,15 @@ let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
 }
+
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Memberships', {
+    await queryInterface.createTable('Venues', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
-      },
-      userId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Users',
-          key: 'id'
-        }
       },
       groupId: {
         type: Sequelize.INTEGER,
@@ -26,8 +20,24 @@ module.exports = {
           key: 'id'
         }
       },
-      status: {
+      address: {
         type: Sequelize.STRING,
+        allowNull: false
+      },
+      city: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      state: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      lat: {
+        type: Sequelize.DECIMAL,
+        allowNull: false
+      },
+      lng: {
+        type: Sequelize.DECIMAL,
         allowNull: false
       },
       createdAt: {
@@ -40,9 +50,10 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
       }
-    });
-  }, options,
+    }, options);
+  },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Memberships');
+    options.tableName = "Venues"
+    await queryInterface.dropTable(options);
   }
 };

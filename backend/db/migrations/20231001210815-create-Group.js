@@ -6,22 +6,34 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Venues', {
+    await queryInterface.createTable('Groups', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      groupId: {
+      organizerId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Groups',
+          model: 'Users',
           key: 'id'
         }
       },
-      address: {
+      name: {
         type: Sequelize.STRING,
+        allowNull: false
+      },
+      about: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      type: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      private: {
+        type: Sequelize.BOOLEAN,
         allowNull: false
       },
       city: {
@@ -30,14 +42,6 @@ module.exports = {
       },
       state: {
         type: Sequelize.STRING,
-        allowNull: false
-      },
-      lat: {
-        type: Sequelize.DECIMAL,
-        allowNull: false
-      },
-      lng: {
-        type: Sequelize.DECIMAL,
         allowNull: false
       },
       createdAt: {
@@ -53,6 +57,7 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Venues');
+    options.tableName = "Groups"
+    await queryInterface.dropTable(options);
   }
 };
