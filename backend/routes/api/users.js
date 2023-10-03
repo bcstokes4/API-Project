@@ -28,7 +28,7 @@ const validateSignup = [
       .withMessage('Password must be 6 characters or more.'),
     handleValidationErrors
   ];
-
+//SIGN UP route
 router.post('/', validateSignup, async (req, res) => {
     const {firstName, lastName, email, password, username } = req.body
     const hashedPassword = bcrypt.hashSync(password)
