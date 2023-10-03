@@ -19,9 +19,7 @@ module.exports = {
         capacity: 100,
         price: 0,
         startDate: "2021-11-19",
-        endDate: "2021-11-19",
-        numAttending: 8,
-        previewImage: "tennismeetupimg.com"
+        endDate: "2021-11-19"
       },
       {
         venueId: 1,
@@ -32,9 +30,18 @@ module.exports = {
         capacity: 100,
         price: 0,
         startDate: "2021-12-19",
-        endDate: "2021-12-20",
-        numAttending: 4,
-        previewImage: "tennissingles.com"
+        endDate: "2021-12-20"
+      },
+      {
+        venueId: 2,
+        groupId: 2,
+        name: "Pickleball Singles",
+        description: 'Everybody come and play some singles, none of that tennis jank',
+        type: 'In person',
+        capacity: 100,
+        price: 0,
+        startDate: "2021-12-19",
+        endDate: "2021-12-20"
       }
     ], { validate: true });
   },
@@ -43,7 +50,7 @@ module.exports = {
     options.tableName = 'Events';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      groupId: { [Op.in]: [1, 100] }
+      groupId: { [Op.in]: [1] }
     }, {});
   }
 };
