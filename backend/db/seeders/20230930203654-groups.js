@@ -27,6 +27,15 @@ module.exports = {
         private: true,
         city: "New York",
         state: "NY"
+      },
+      {
+        organizerId: 3,
+        name: "Evening Rocket League Group",
+        about: "Every Friday night, we join an xbox live party chat and run some Rocket League tournaments. We are all hardstuck diamond, so come one come all fellow scrubs!",
+        type: "Online",
+        private: true,
+        city: "Kansas City",
+        state: "KS"
       }
     ], { validate: true });
   },
@@ -35,7 +44,7 @@ module.exports = {
     options.tableName = 'Groups';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      organizerId: { [Op.in]: [1, 100] }
+      organizerId: { [Op.in]: [1, 2, 3] }
     }, {});
   }
 };

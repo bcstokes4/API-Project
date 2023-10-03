@@ -17,6 +17,22 @@ module.exports = {
         state: "NY",
         lat: 37.7645358,
         lng: -122.4730327
+      },
+      {
+        groupId: 1,
+        address: "456 Banana Boulevard",
+        city: "New York",
+        state: "NY",
+        lat: 37.7645358,
+        lng: -122.4730327
+      },
+      {
+        groupId: 2,
+        address: "789 Legume Lane",
+        city: "New York",
+        state: "NY",
+        lat: 37.7645358,
+        lng: -122.4730327
       }
     ], { validate: true });
   },
@@ -25,7 +41,7 @@ module.exports = {
     options.tableName = 'Venues';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      groupId: { [Op.in]: [1, 100] }
+      groupId: { [Op.in]: [1, 2, 3] }
     }, {});
   }
 };
