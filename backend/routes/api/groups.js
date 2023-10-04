@@ -36,6 +36,117 @@ const validateNewGroup = [
     .withMessage("State is required"),
     handleValidationErrors
 ]
+//FOR VALIDATING NEW VENUE
+const validateVenue = [
+    check('address')
+        .exists({ checkFalsy: true })
+        .withMessage('Street address is required'),
+    check('city')
+        .exists({ checkFalsy: true })
+        .withMessage('City is required'),
+    check('state')
+        .exists({ checkFalsy: true })
+        .withMessage('State is required'),
+    check('lat')
+        .exists({ checkFalsy: true })
+        .isDecimal({force_decimal: true})
+        .withMessage('Latitude is not valid'),
+    check('lng')
+        .exists({ checkFalsy: true })
+        .isDecimal({force_decimal: true})
+        .withMessage('Longitude is not valid'),
+    handleValidationErrors
+]
+
+// GET ALL VENUES FOR A GROUP SPECIFIED BY ITS ID
+router.get('/:groupId/venues', requireAuth, async (req, res) => {
+
+    const group = await Group.findOne({
+        where: {
+            id: req.params.groupId
+        }
+    })
+    // cant find group error(404)
+    if(!group) {
+        res.status(404).json({
+            message: "Group couldn't be found"
+        })
+    }
+    const userMemberships = await Membership.findOne({
+        where: {
+            groupId: req.params.groupId,
+            userId: req.user.id
+        }
+    })
+    let groupJSON = group.toJSON()
+    let memberJSON = userMemberships.toJSON()
+    // AUTHENTICATION: CURRENT USER MUST BE ORGANIZER OF GROUP OR CO-HOST
+    if(groupJSON.organizerId != req.user.id && memberJSON.status != "co-host") {
+        res.status(403).json({
+            name: 'Authorization Error',
+            message: 'You must be the organizer of the group or have co-host status to view venues'
+        })
+    }
+    const venues = await Venue.findAll({
+        attributes: ['id', 'groupId', 'address', 'city', 'state', 'lat', 'lng'],
+        where: {
+            groupId: req.params.groupId
+        }
+    })
+
+    res.json({
+        Venues: venues
+    })
+})
+
+// CREATE A NEW VENUE FOR A GROUP SPECIFIED BY ITS ID
+router.post('/:groupId/venues', requireAuth, validateVenue, async (req, res) => {
+
+    const group = await Group.findOne({
+        where: {
+            id: req.params.groupId
+        }
+    })
+    // cant find group error(404)
+    if(!group) {
+        res.status(404).json({
+            message: "Group couldn't be found"
+        })
+    }
+    const userMemberships = await Membership.findAll({
+        where: {
+            groupId: req.params.groupId,
+            userId: req.user.id
+        }
+    })
+    // AUTHENTICATION: CURRENT USER MUST BE ORGANIZER OF GROUP OR CO-HOST
+    if(group.organizerId != req.user.id && userMemberships.status != 'co-host') {
+        res.status(403).json({
+            name: 'Authorization Error',
+            message: 'You must be the organizer of the group or have co-host status to view venues'
+        })
+    }
+    const {address, city, state, lat, lng} = req.body
+    const newVenue = await Venue.create({
+        groupId: req.params.groupId,
+        address,
+        city,
+        state,
+        lat,
+        lng
+    })
+
+    res.json({
+        id: newVenue.id,
+        groupId: parseInt(newVenue.groupId),
+        address: newVenue.address,
+        city: newVenue.city,
+        state: newVenue.state,
+        lat: newVenue.lat,
+        lng: newVenue.lng
+    })
+})
+
 
 //GETS ALL GROUPS JOINED/ORGANIZED BY CURRENT USER
 router.get('/current', requireAuth, async (req, res) => {
@@ -158,7 +269,7 @@ router.get('/', async (req, res) => {
     const Members = await Membership.findAll()
 
     let arr = []
-    
+
     for (let i = 0; i < Groups.length; i++) {
         const groupObj = Groups[i].toJSON();
 
