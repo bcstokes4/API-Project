@@ -30,6 +30,26 @@ module.exports = {
         eventId: 2,
         url: 'eventimg2B.com',
         preview: false
+      },
+      {
+        eventId: 3,
+        url: 'eventimg3A.com',
+        preview: true
+      },
+      {
+        eventId: 3,
+        url: 'eventimg3B.com',
+        preview: false
+      },
+      {
+        eventId: 4,
+        url: 'eventimg4A.com',
+        preview: true
+      },
+      {
+        eventId: 4,
+        url: 'eventimg4B.com',
+        preview: false
       }
     ], { validate: true });
   },

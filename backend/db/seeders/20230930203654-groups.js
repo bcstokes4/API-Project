@@ -34,8 +34,8 @@ module.exports = {
         about: "Every Friday night, we join an xbox live party chat and run some Rocket League tournaments. We are all hardstuck diamond, so come one come all fellow scrubs!",
         type: "Online",
         private: true,
-        city: "Kansas City",
-        state: "KS"
+        city: "Ney York",
+        state: "NY"
       }
     ], { validate: true });
   },
