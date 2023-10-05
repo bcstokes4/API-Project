@@ -42,6 +42,245 @@ const validateEvent = [
     handleValidationErrors
 ]
 
+
+// DELETE ATTENDANCE TO AN EVENT SPECIFIED BY ID
+router.delete('/:eventId/attendance', requireAuth, async (req, res) => {
+    const event = await Event.findOne({
+        where: {id: req.params.eventId}
+    })
+
+    if(!event){
+        return res.status(404).json({
+            message: "Event couldn't be found"
+        })
+    }
+
+    //Authorization: user must be organizer or co-host
+    const group = await Group.findOne({
+        where: {
+            id: event.groupId
+        }
+    })
+
+    const {userId} = req.body
+
+    if(group.organizerId != req.user.id && (userId != req.user.id)){
+        return res.status(403).json({
+            name: 'Authorization Error',
+            message: "Only the User or organizer may delete an Attendance"
+        })
+    }
+
+    const attendance = await Attendance.findOne({
+        where: {
+            userId,
+            eventId: event.id
+        }
+    })
+    if(!attendance){
+        return res.status(404).json({
+            message: "Attendance does not exist for this User"
+        })
+    }
+
+    else {
+        await attendance.destroy()
+
+        return res.json({
+            "message": "Successfully deleted attendance from event"
+          })
+    }
+})
+
+
+// CHANGE THE STATUS OF AN ATTENDANCE FOR AN EVENT SPECIFIED BY ID
+router.put('/:eventId/attendance', requireAuth, async (req, res) => {
+    const event = await Event.findOne({
+        where: {id: req.params.eventId}
+    })
+
+    if(!event){
+        return res.status(404).json({
+            message: "Event couldn't be found"
+        })
+    }
+
+    //Authorization: user must organizer or co-host
+    const group = await Group.findOne({
+        where: {
+            id: event.groupId
+        }
+    })
+    const userMembership = await Membership.findOne({
+        where: {
+            userId: req.user.id,
+            groupId: group.id
+        }
+    })
+    if(group.organizerId != req.user.id && (!userMembership || userMembership.status != 'co-host')){
+        return res.status(403).json({
+            name: 'Authorization Error',
+            message: 'You must be the organizer or co-host to change attendance status of a user'
+        })
+    }
+
+    const {userId, status} = req.body
+    if(!userId || !status) {
+        return res.status(400).json({
+            message: "userId and status required to change attendance"
+        })
+    }
+    const attendance = await Attendance.findOne({
+        where: {
+            userId,
+            eventId: event.id
+        }
+    })
+    if(!attendance){
+        return res.status(404).json({
+            message: "Attendance between the user and the event does not exist"
+        })
+    }
+
+    if(status == 'pending'){
+        return res.status(400).json({
+            message: "Cannot change an attendance status to pending"
+          })
+    }
+
+
+
+    else{
+        attendance.status = status
+
+        return res.json({
+            id: attendance.id,
+            eventId: attendance.eventId,
+            userId: attendance.userId,
+            status: attendance.status
+        })
+
+    }
+})
+
+// REQUEST TO ATTEND AN EVENT BASED ON THE EVENTS ID
+router.post('/:eventId/attendance', requireAuth, async (req, res) => {
+    const event = await Event.findOne({
+        where: {id: req.params.eventId}
+    })
+
+    if(!event){
+        return res.status(404).json({
+            message: "Event couldn't be found"
+        })
+    }
+    //Authorization: user must be a member of the group to request attendance
+    const group = await Group.findOne({
+        where: {
+            id: event.groupId
+        }
+    })
+    const userMembership = await Membership.findOne({
+        where: {
+            userId: req.user.id,
+            groupId: group.id
+        }
+    })
+    if(group.organizerId != req.user.id && (!userMembership || userMembership.status == 'pending')){
+        return res.status(403).json({
+            name: 'Authorization Error',
+            message: 'You must be a member of the group to request attendance to event'
+        })
+    }
+
+    const attendance = await Attendance.findOne({
+        where: {
+            userId: req.user.id,
+            eventId: event.id
+        }
+    })
+
+    if(attendance && attendance.status == 'pending') {
+       return res.status(400).json({
+            message: "Attendance has already been requested"
+        })
+    }
+    if(attendance && attendance.status == 'attending') {
+        return res.status(400).json({
+             message: "User is already an attendee of the event"
+         })
+     }
+
+     else{
+        let newAttendance = await Attendance.create({
+            eventId: req.params.eventId,
+            userId: req.user.id,
+            status: 'pending'
+        })
+
+        return res.json({
+            userId: req.user.id,
+            status: newAttendance.status
+        })
+     }
+})
+
+
+// GET ALL ATTENDEES OF AN EVENT SPECIFIED BY ITS ID
+router.get('/:eventId/attendees', async (req, res) => {
+
+const event = await Event.findOne({
+    where: {id: req.params.eventId}
+})
+
+if(!event){
+    return res.status(404).json({
+        message: "Event couldn't be found"
+    })
+}
+const group = await Group.findOne({
+    where: {
+        id: event.groupId
+    }
+})
+const userMembership = await Membership.findOne({
+    where: {
+        userId: req.user.id,
+        groupId: group.id
+    }
+})
+
+const attendees = await Attendance.findAll({
+    where: {eventId: req.params.eventId},
+    attributes: {
+        exclude: ['createdAt', 'updatedAt', 'eventId']
+    }
+})
+let arr = []
+
+for (let i = 0; i < attendees.length; i++) {
+    const attendeeObj = attendees[i].toJSON();
+    const {userId, status} = attendeeObj
+    const user = await User.findByPk(userId)
+    const {firstName, lastName} = user
+
+    // for non-host or co-host users
+    if(group.organizerId != req.user.id || (userMembership && userMembership.status != 'co-host')) {
+            if(attendeeObj.status == 'pending') continue
+    }
+
+    attendeeObj.firstName = firstName
+    attendeeObj.lastName = lastName
+    delete attendeeObj.userId
+
+    attendeeObj.Attendance = {status}
+    delete attendeeObj.status
+    arr.push(attendeeObj)
+}
+
+    return res.json({Attendees: arr})
+})
+
 // DELETE AN EVENT SPECIFIED BY ITS ID
 router.delete('/:eventId', requireAuth, async (req, res) => {
     const event = await Event.findOne({
@@ -258,8 +497,91 @@ router.get('/:eventId', async (req, res) => {
     res.json(eventJSON)
 })
 
+
+const queryValidation = [
+    check('page')
+        .custom( val => {
+            if(!val) return true
+            if(val > 0 && val <= 10) return true
+
+            else return false
+        })
+        .withMessage('Page must be greater than or equal to 1'),
+    check('page')
+        .custom( val => {
+            if(!val) return true
+            if(isNaN(val)) return false
+
+            else return true
+        })
+        .withMessage('Page must be an integer'),
+    check('size')
+        .custom( val => {
+            if(!val) return true
+            if(val > 0 && val <= 20) return true
+            else return false
+        })
+        .withMessage('Size must be greater than or equal to 1'),
+    check('size')
+        .custom( val => {
+            if(!val) return true
+            if(val > 0 && val <= 20) return true
+            else return false
+        })
+        .withMessage('Size must be an integer'),
+    check('name')
+        .optional()
+        .isString()
+        .custom(val => {
+            if(!val) return true
+            if(val == Number(val)) return false
+            if(typeof val === "string") return true
+            else return false
+        })
+        .withMessage("Name must be a string"),
+    check('type')
+        .optional()
+        .custom(val => {
+            if(!val) return true
+            if(val == 'In person') return true
+            if(val == 'Online') return true
+
+            else return false
+        })
+        .withMessage("Type must be 'Online' or 'In person'"),
+    check('startDate')
+        .optional()
+        .isISO8601('yyyy-mm-dd')
+        .isAfter('2023-01-01')
+        .withMessage('Start date must be a valid date'),
+    handleValidationErrors
+]
+const { Op } = require('sequelize')
 // GET ALL EVENTS
-router.get('/', async (req, res) => {
+router.get('/', queryValidation, async (req, res) => {
+    // QUERY:
+    let { page, size, name, type, startDate} = req.query
+    let pagination = {}
+    let whereObject = {}
+
+    if(!page) page = 1
+    if(!size) size = 20
+
+    pagination.limit = size
+    pagination.offset = (size * (page - 1))
+
+
+    if(name) {
+        whereObject.name = {[Op.substring]: name}
+     }
+
+    if(type) whereObject.type = type
+    
+    if(startDate) {
+       whereObject.startDate = {[Op.substring]: startDate}
+    }
+
+
     const Events = await Event.findAll({
         attributes: {exclude: ['createdAt', 'updatedAt', 'description', 'capacity', 'price']},
         include: [
@@ -271,7 +593,9 @@ router.get('/', async (req, res) => {
             model: Venue,
             attributes: ['id', 'city', 'state']
         }
-    ]
+    ],
+    where: whereObject,
+    ...pagination
     })
 
     const EventImages = await EventImage.findAll()
@@ -307,7 +631,9 @@ let arr = []
 
 
 
-    res.json({Events: arr})
+    res.json({
+        Events: arr
+    })
 })
 
 
