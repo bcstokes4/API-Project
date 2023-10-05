@@ -100,7 +100,7 @@ router.put('/:groupId/membership', requireAuth, async (req, res) => {
     })
     // cant find group error(404)
     if(!group) {
-        res.status(404).json({
+       return res.status(404).json({
             message: "Group couldn't be found"
         })
     }
