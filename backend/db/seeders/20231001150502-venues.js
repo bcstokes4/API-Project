@@ -19,7 +19,7 @@ module.exports = {
         lng: -122.4730327
       },
       {
-        groupId: 1,
+        groupId: 2,
         address: "456 Banana Boulevard",
         city: "New York",
         state: "NY",
@@ -27,7 +27,7 @@ module.exports = {
         lng: -122.4730327
       },
       {
-        groupId: 2,
+        groupId: 3,
         address: "789 Legume Lane",
         city: "New York",
         state: "NY",

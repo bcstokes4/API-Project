@@ -15,39 +15,44 @@ module.exports = {
         status: 'attending'
       },
       {
-        eventId: 1,
-        userId: 2,
-        status: 'waitlist'
-      },
-      {
-        eventId: 1,
-        userId: 3,
-        status: 'pending'
-      },
-      {
         eventId: 2,
         userId: 1,
         status: 'attending'
       },
       {
-        eventId: 2,
-        userId: 3,
+        eventId: 4,
+        userId: 1,
         status: 'attending'
       },
       {
         eventId: 3,
+        userId: 2,
+        status: 'attending'
+      },
+      {
+        eventId: 2,
+        userId: 2,
+        status: 'pending'
+      },
+      {
+        eventId: 4,
         userId: 3,
         status: 'attending'
+      },
+      {
+        eventId: 2,
+        userId: 5,
+        status: 'pending'
+      },
+      {
+        eventId: 3,
+        userId: 3,
+        status: 'waitlist'
       },
       {
         eventId: 3,
         userId: 4,
-        status: 'attending'
-      },
-      {
-        eventId: 3,
-        userId: 5,
-        status: 'attending'
+        status: 'pending'
       }
     ], { validate: true });
   },
@@ -56,7 +61,7 @@ module.exports = {
     options.tableName = 'Attendances';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      eventId: { [Op.in]: [1,2,3] }
+      eventId: { [Op.in]: [1,2,3,4] }
     }, {});
   }
 };
