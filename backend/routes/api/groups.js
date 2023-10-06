@@ -415,7 +415,7 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res) => 
     })
 
     // AUTHENTICATION: CURRENT USER MUST BE ORGANIZER OF GROUP OR CO-HOST
-    if(group.organizerId != req.user.id && userMemberships.status != 'co-host') {
+    if(group.organizerId != req.user.id && (!userMemberships || userMemberships.status != 'co-host')) {
        return res.status(403).json({
             name: 'Authorization Error',
             message: 'You must be the organizer of the group or have co-host status to view venues'
@@ -460,7 +460,7 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res) => 
         name: newEvent.name,
         type: newEvent.type,
         capacity: newEvent.capacity,
-        price: newEvent.price,
+        price: Number(newEvent.price),
         description: newEvent.description,
         startDate: startDate,
         endDate: endDate
@@ -595,7 +595,7 @@ router.post('/:groupId/venues', requireAuth, validateVenue, async (req, res) => 
         }
     })
     // AUTHENTICATION: CURRENT USER MUST BE ORGANIZER OF GROUP OR CO-HOST
-    if(group.organizerId != req.user.id && userMemberships.status != 'co-host') {
+    if(group.organizerId != req.user.id && (!userMemberships || userMemberships.status != 'co-host')) {
         return res.status(403).json({
             name: 'Authorization Error',
             message: 'You must be the organizer of the group or have co-host status to view venues'

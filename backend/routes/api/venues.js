@@ -62,7 +62,7 @@ router.put('/:venueId', requireAuth, validateVenue, async ( req, res) => {
     // let groupJSON = group.toJSON()
     // let memberJSON = userMemberships.toJSON()
     // AUTHENTICATION: CURRENT USER MUST BE ORGANIZER OF GROUP OR CO-HOST
-    if(group.organizerId != req.user.id && userMemberships.status != "co-host") {
+    if(group.organizerId != req.user.id && (!userMemberships || userMemberships.status != "co-host")) {
         res.status(403).json({
             name: 'Authorization Error',
             message: 'You must be the organizer of the group or have co-host status to view venues'

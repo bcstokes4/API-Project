@@ -157,7 +157,9 @@ router.put('/:eventId/attendance', requireAuth, async (req, res) => {
 
 
     else{
+        
         attendance.status = status
+        await attendance.save()
 
         return res.json({
             id: attendance.id,
@@ -517,7 +519,7 @@ router.get('/:eventId', async (req, res) => {
     eventJSON.numAttending = numAttending
 
     eventJSON.price = Number(eventJSON.price)
-    
+
     return res.json(eventJSON)
 })
 
