@@ -764,7 +764,7 @@ router.get('/:groupId', async (req, res) => {
             message: "Group couldn't be found"
         })
     }
-    let memberCount = 0;
+    let memberCount = 1;
     const Members = await Membership.findAll()
     for (let i = 0; i < Members.length; i++) {
         const memberObj = Members[i].toJSON();
