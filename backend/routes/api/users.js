@@ -40,7 +40,26 @@ const validateSignup = [
 router.post('/', validateSignup, async (req, res) => {
     const {firstName, lastName, email, password, username } = req.body
     const hashedPassword = bcrypt.hashSync(password)
-    const user = await User.create({firstName, lastName, email, username, hashedPassword})
+
+    // const usernameCheck = await User.findOne({
+      //   where: {
+        //     username: username
+        //   }
+        // })
+        // const emailCheck = await User.findOne({
+          //   where: {
+            //     email: email
+            //   }
+            // })
+            // res.json(usernameCheck)
+            // if(usernameCheck || emailCheck){
+              //   return res.status(400).json({
+                //     name: "Bad Request",
+                //     message: "Username and email must be unique"
+                //   })
+                // }
+  const user = await User.create({firstName, lastName, email, username, hashedPassword})
+
 
     const safeUser = {
         id: user.id,

@@ -262,12 +262,12 @@ const userMembership = await Membership.findOne({
 
 //NOT SURE ABOUT THIS PART, I THINK THAT ONLY MEMBERS SHOULD BE ABLE TO VIEW ATTENDEES BUT IDK
 // AUTHORIZATION: CURRENT USER MUST BE ORGANIZER OF GROUP OR CO-HOST
-if(group.organizerId != req.user.id && (!userMembership || userMembership.status == 'pending')) {
-    return res.status(403).json({
-         name: 'Authorization Error',
-         message: 'You must be a member of the group to view attendees'
-     })
- }
+// if(group.organizerId != req.user.id && (!userMembership || userMembership.status == 'pending')) {
+//     return res.status(403).json({
+//          name: 'Authorization Error',
+//          message: 'You must be a member of the group to view attendees'
+//      })
+//  }
 
 
 

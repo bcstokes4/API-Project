@@ -48,12 +48,20 @@ const validateVenue = [
         .exists({ checkFalsy: true })
         .withMessage('State is required'),
     check('lat')
-        .exists({ checkFalsy: true })
-        .isDecimal({force_decimal: true})
+        .custom(val => {
+            if(!val) return false
+            if(val < -90 || val > 90) return false
+
+            else return true
+        })
         .withMessage('Latitude is not valid'),
     check('lng')
-        .exists({ checkFalsy: true })
-        .isDecimal({force_decimal: true})
+        .custom(val => {
+            if(!val) return false
+            if(val < -180 || val > 180) return false
+
+            else return true
+        })
         .withMessage('Longitude is not valid'),
     handleValidationErrors
 ]
@@ -312,12 +320,12 @@ router.get('/:groupId/members', async (req, res) => {
         }
     })
     // AUTHORIZATION: CURRENT USER MUST BE ORGANIZER OF GROUP OR CO-HOST OR MEMBER TO VIEW ANY MEMBERSHIP
-    if(group.organizerId != req.user.id && (!userMemberships || userMemberships.status == 'pending')) {
-        return res.status(403).json({
-            name: 'Authorization Error',
-            message: 'You must be a member of the group to view members'
-        })
-    }
+    // if(group.organizerId != req.user.id && (!userMemberships || userMemberships.status == 'pending')) {
+    //     return res.status(403).json({
+    //         name: 'Authorization Error',
+    //         message: 'You must be a member of the group to view members'
+    //     })
+    // }
 
     // For users that are either members, co-hosts or organizers of the group:
 
@@ -355,8 +363,7 @@ router.get('/:groupId/members', async (req, res) => {
     })
     }
 
-    // if you are just a member of the group:
-    if(userMemberships.status == 'member' || userMemberships.status == 'co-host') {
+    // if you are NOT an organizer/co-host of the group:
         let arr = []
         for (let i = 0; i < members.length; i++) {
             const memberObj = members[i].toJSON();
@@ -383,7 +390,8 @@ router.get('/:groupId/members', async (req, res) => {
     return res.json({
         Members: arr
     })
-    }
+
+    
 })
 
 // CREATE AN EVENT FOR A GROUP SPECIFIED BY ITS ID
@@ -414,6 +422,8 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res) => 
         })
     }
     const {venueId, name, type, capacity, price, description, startDate, endDate} = req.body
+
+
     let venue = await Venue.findOne({
         where: {
             id: venueId
@@ -436,7 +446,7 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res) => 
         groupId: parseInt(req.params.groupId),
         venueId,
         name, type, capacity,
-        price: parseInt(price),
+        price: price,
         description,
         startDate,
         endDate
