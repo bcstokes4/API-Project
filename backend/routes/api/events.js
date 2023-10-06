@@ -145,7 +145,13 @@ router.put('/:eventId/attendance', requireAuth, async (req, res) => {
     if(status == 'pending'){
         return res.status(400).json({
             message: "Cannot change an attendance status to pending"
-          })
+        })
+    }
+
+    if(status != 'attending' && status != 'waitlist') {
+        return res.status(400).json({
+            message: "Allowed status values: 'attending', 'waitlist', and 'pending'."
+        })
     }
 
 
@@ -200,7 +206,8 @@ router.post('/:eventId/attendance', requireAuth, async (req, res) => {
         }
     })
 
-    if(attendance && attendance.status == 'pending') {
+
+    if(attendance && (attendance.status == 'pending' || attendance.status == 'waitlist')) {
        return res.status(400).json({
             message: "Attendance has already been requested"
         })
@@ -212,6 +219,7 @@ router.post('/:eventId/attendance', requireAuth, async (req, res) => {
      }
 
      else{
+
         let newAttendance = await Attendance.create({
             eventId: req.params.eventId,
             userId: req.user.id,
@@ -238,6 +246,7 @@ if(!event){
         message: "Event couldn't be found"
     })
 }
+
 const group = await Group.findOne({
     where: {
         id: event.groupId
@@ -249,6 +258,18 @@ const userMembership = await Membership.findOne({
         groupId: group.id
     }
 })
+
+
+//NOT SURE ABOUT THIS PART, I THINK THAT ONLY MEMBERS SHOULD BE ABLE TO VIEW ATTENDEES BUT IDK
+// AUTHORIZATION: CURRENT USER MUST BE ORGANIZER OF GROUP OR CO-HOST
+if(group.organizerId != req.user.id && (!userMembership || userMembership.status == 'pending')) {
+    return res.status(403).json({
+         name: 'Authorization Error',
+         message: 'You must be a member of the group to view attendees'
+     })
+ }
+
+
 
 const attendees = await Attendance.findAll({
     where: {eventId: req.params.eventId},
@@ -290,7 +311,7 @@ router.delete('/:eventId', requireAuth, async (req, res) => {
     })
     // cant find event error(404)
     if(!event) {
-        res.status(404).json({
+        return res.status(404).json({
             message: "Event couldn't be found"
         })
     }
@@ -309,7 +330,7 @@ router.delete('/:eventId', requireAuth, async (req, res) => {
 
     // AUTHENTICATION: CURRENT USER MUST BE ORGANIZER OF GROUP OR CO-HOST
     if(group.organizerId != req.user.id && (!userMemberships || userMemberships.status != 'co-host')) {
-        res.status(403).json({
+        return res.status(403).json({
             name: 'Authorization Error',
             message: 'You must be the organizer of the group or have co-host status to view venues'
         })
@@ -318,7 +339,7 @@ router.delete('/:eventId', requireAuth, async (req, res) => {
     else {
         await event.destroy()
 
-    res.json({
+    return res.json({
         message: "Successfully deleted"
       })
     }
@@ -332,7 +353,7 @@ router.post('/:eventId/images', requireAuth, async (req, res) => {
         }
     })
     if(!event) {
-        res.status(404).json({
+        return res.status(404).json({
             message: "Event couldn't be found"
         })
     }
@@ -355,7 +376,7 @@ router.post('/:eventId/images', requireAuth, async (req, res) => {
         }
     })
     if((!userAttendance || userAttendance.status != 'attending') && (group.organizerId != req.user.id) && (!membership || membership.status != 'co-host')) {
-        res.status(403).json({
+        return res.status(403).json({
             name: 'Authorization Error',
             message: 'Current User must be an attendee, host, or co-host of the event'
         })
@@ -368,7 +389,7 @@ router.post('/:eventId/images', requireAuth, async (req, res) => {
         preview
     })
 
-    res.json({
+    return res.json({
         id: newImage.id,
         url: newImage.url,
         preview: newImage.preview
@@ -380,7 +401,7 @@ router.post('/:eventId/images', requireAuth, async (req, res) => {
 router.put('/:eventId', requireAuth, validateEvent, async (req, res) => {
     const {venueId, name, type, capacity, price, description, startDate, endDate} = req.body
     if(endDate < startDate) {
-        res.status(400).json({
+        return res.status(400).json({
             name: 'Validation Error',
             message: 'End date is less than start date'
         })
@@ -392,7 +413,7 @@ router.put('/:eventId', requireAuth, validateEvent, async (req, res) => {
     })
     // cant find event error(404)
     if(!event) {
-        res.status(404).json({
+        return res.status(404).json({
             message: "Event couldn't be found"
         })
     }
@@ -408,7 +429,7 @@ router.put('/:eventId', requireAuth, validateEvent, async (req, res) => {
     })
     // cant find venue error(404)
     if(!venue) {
-        res.status(404).json({
+        return res.status(404).json({
             message: "Venue couldn't be found"
         })
     }
@@ -421,7 +442,7 @@ router.put('/:eventId', requireAuth, validateEvent, async (req, res) => {
 
     // AUTHENTICATION: CURRENT USER MUST BE ORGANIZER OF GROUP OR CO-HOST
     if(group.organizerId != req.user.id && (!userMemberships || userMemberships.status != 'co-host')) {
-        res.status(403).json({
+        return res.status(403).json({
             name: 'Authorization Error',
             message: 'You must be the organizer of the group or have co-host status to view venues'
         })
@@ -436,7 +457,7 @@ router.put('/:eventId', requireAuth, validateEvent, async (req, res) => {
     event.endDate = endDate
 
     await event.save()
-    res.json({
+    return res.json({
         id: event.id,
         groupId: event.groupId,
         venueId: event.venueId,
@@ -476,7 +497,7 @@ router.get('/:eventId', async (req, res) => {
     })
 
     if(!event) {
-        res.status(404).json({
+        return res.status(404).json({
             message: "Event couldn't be found"
         })
     }
@@ -494,7 +515,8 @@ router.get('/:eventId', async (req, res) => {
     }
     eventJSON = event.toJSON()
     eventJSON.numAttending = numAttending
-    res.json(eventJSON)
+
+    return res.json(eventJSON)
 })
 
 
@@ -556,7 +578,12 @@ const queryValidation = [
         .withMessage('Start date must be a valid date'),
     handleValidationErrors
 ]
+
+
+
 const { Op } = require('sequelize')
+
+
 // GET ALL EVENTS
 router.get('/', queryValidation, async (req, res) => {
     // QUERY:
@@ -576,7 +603,7 @@ router.get('/', queryValidation, async (req, res) => {
      }
 
     if(type) whereObject.type = type
-    
+
     if(startDate) {
        whereObject.startDate = {[Op.substring]: startDate}
     }
@@ -631,7 +658,7 @@ let arr = []
 
 
 
-    res.json({
+    return res.json({
         Events: arr
     })
 })

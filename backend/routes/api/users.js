@@ -26,6 +26,14 @@ const validateSignup = [
       .exists({ checkFalsy: true })
       .isLength({ min: 6 })
       .withMessage('Password must be 6 characters or more.'),
+    check('firstName')
+      .isString()
+      .isLength({ min: 2 })
+      .withMessage('First Name is required'),
+    check('lastName')
+      .isString()
+      .isLength({ min: 2 })
+      .withMessage('Last Name is required'),
     handleValidationErrors
   ];
 //SIGN UP route
