@@ -656,7 +656,7 @@ router.get('/current', requireAuth, async (req, res) => {
 
 
 
-        return arr.push(groupObj)
+        arr.push(groupObj)
     }
 
     let finalGroups = []
