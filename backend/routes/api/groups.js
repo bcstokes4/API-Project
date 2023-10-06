@@ -137,21 +137,21 @@ router.put('/:groupId/membership', requireAuth, async (req, res) => {
               })
         }
 
+        let user = await User.findOne({where: {id: memberId}})
+        if(!user){
+            return res.status(400).json({
+                "message": "User couldn't be found"
+              })
+        }
         const membership = await Membership.findOne({
             where: {
-                id: memberId,
+                userId: memberId,
                 groupId: req.params.groupId
             }
         })
         if(!membership){
             return res.status(400).json({
                 "message": "Membership between the user and the group does not exist"
-              })
-        }
-        let user = await User.findOne({where: {id: membership.userId}})
-        if(!user){
-            return res.status(400).json({
-                "message": "User couldn't be found"
               })
         }
 
@@ -177,9 +177,9 @@ router.put('/:groupId/membership', requireAuth, async (req, res) => {
             await membership.save()
 
             return res.json({
-                id: membership.userId,
+                id: membership.id,
                 groupId: membership.groupId,
-                memberId: membership.id,
+                memberId: membership.userId,
                 status: membership.status
             })
         }
@@ -294,7 +294,7 @@ router.post('/:groupId/membership', requireAuth, async (req, res) => {
         })
 
         return res.json({
-            memberId: newMember.id,
+            memberId: req.user.id,
             status: newMember.status
         })
     }
