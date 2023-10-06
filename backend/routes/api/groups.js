@@ -391,7 +391,7 @@ router.get('/:groupId/members', async (req, res) => {
         Members: arr
     })
 
-    
+
 })
 
 // CREATE AN EVENT FOR A GROUP SPECIFIED BY ITS ID
@@ -656,11 +656,12 @@ router.get('/current', requireAuth, async (req, res) => {
 
                         if(memberObj.userId == req.user.id) groupIdsForUser.push(groupObj.id)
 
-                        if(!groupObj.numMembers) groupObj.numMembers = 1
+                        if(!groupObj.numMembers) groupObj.numMembers = 2
                         else {
                             groupObj.numMembers++
                         }
                     }
+                    if(!groupObj.numMembers && k == Members.length - 1) groupObj.numMembers = 1
                 }
             }
 
@@ -784,6 +785,7 @@ router.get('/:groupId', async (req, res) => {
                 memberCount++
             }
         }
+
     }
 
 
@@ -828,12 +830,13 @@ router.get('/', async (req, res) => {
 
             if(memberObj.groupId == groupObj.id) {
                 if(memberObj.status == 'member' || memberObj.status =='co-host') {
-                     if(!groupObj.numMembers) groupObj.numMembers = 1
+                     if(!groupObj.numMembers) groupObj.numMembers = 2
                     else {
                         groupObj.numMembers++
                     }
                 }
             }
+            if(!groupObj.numMembers && k == Members.length -1) groupObj.numMembers = 1
         }
         arr.push(groupObj)
     }
