@@ -612,7 +612,7 @@ router.get('/', queryValidation, async (req, res) => {
         // let test =
         // console.log(typeof test)
         // res.json(test)
-       whereObject.startDate = {[Op.like]: new Date(startDate)}
+       whereObject.startDate = new Date(startDate)
     }
 
 
