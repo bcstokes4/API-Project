@@ -157,7 +157,7 @@ router.put('/:eventId/attendance', requireAuth, async (req, res) => {
 
 
     else{
-        
+
         attendance.status = status
         await attendance.save()
 
@@ -609,7 +609,10 @@ router.get('/', queryValidation, async (req, res) => {
     if(type) whereObject.type = type
 
     if(startDate) {
-       whereObject.startDate = {[Op.substring]: startDate}
+        // let test =
+        // console.log(typeof test)
+        // res.json(test)
+       whereObject.startDate = {[Op.like]: new Date(startDate)}
     }
 
 
