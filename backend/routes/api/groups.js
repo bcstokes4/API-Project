@@ -661,8 +661,9 @@ router.get('/current', requireAuth, async (req, res) => {
                             groupObj.numMembers++
                         }
                     }
-                    if(!groupObj.numMembers && k == Members.length - 1) groupObj.numMembers = 1
                 }
+                
+                if(!groupObj.numMembers && k == Members.length - 1) groupObj.numMembers = 1
             }
 
 

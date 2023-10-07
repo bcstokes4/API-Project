@@ -20,12 +20,20 @@ const validateVenue = [
         .exists({ checkFalsy: true })
         .withMessage('State is required'),
     check('lat')
-        .exists({ checkFalsy: true })
-        .isDecimal({force_decimal: true})
+        .custom(val => {
+            if(!val) return false
+            if(val < -90 || val > 90) return false
+
+            else return true
+        })
         .withMessage('Latitude is not valid'),
     check('lng')
-        .exists({ checkFalsy: true })
-        .isDecimal({force_decimal: true})
+        .custom(val => {
+            if(!val) return false
+            if(val < -180 || val > 180) return false
+
+            else return true
+        })
         .withMessage('Longitude is not valid'),
     handleValidationErrors
 ]
