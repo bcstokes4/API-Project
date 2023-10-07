@@ -568,15 +568,17 @@ router.get('/:groupId/venues', requireAuth, async (req, res) => {
             groupId: req.params.groupId
         }
     })
-
+    let venuesArr = []
     for (let i = 0; i < venues.length; i++) {
         const venueObj = venues[i].toJSON();
 
         venueObj.lat = parseFloat(venueObj.lat)
         venueObj.lng = parseFloat(venueObj.lng)
+
+        venuesArr.push(venueObj)
     }
     return res.json({
-        Venues: venues
+        Venues: venuesArr
     })
 })
 
