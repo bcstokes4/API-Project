@@ -90,8 +90,8 @@ router.put('/:venueId', requireAuth, validateVenue, async ( req, res) => {
         groupId: venue.groupId,
         city: venue.city,
         state: venue.state,
-        lat: venue.lat,
-        lng: venue.lng
+        lat: parseFloat(venue.lat),
+        lng: parseFloat(venue.lng)
     })
 })
 

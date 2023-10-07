@@ -617,8 +617,8 @@ router.post('/:groupId/venues', requireAuth, validateVenue, async (req, res) => 
         address: newVenue.address,
         city: newVenue.city,
         state: newVenue.state,
-        lat: newVenue.lat,
-        lng: newVenue.lng
+        lat: parseFloat(newVenue.lat),
+        lng: parseFloat(newVenue.lng)
     })
 })
 
