@@ -569,6 +569,12 @@ router.get('/:groupId/venues', requireAuth, async (req, res) => {
         }
     })
 
+    for (let i = 0; i < venues.length; i++) {
+        const venueObj = venues[i].toJSON();
+
+        venueObj.lat = parseFloat(venueObj.lat)
+        venueObj.lng = parseFloat(venueObj.lng)
+    }
     return res.json({
         Venues: venues
     })
