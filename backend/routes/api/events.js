@@ -14,9 +14,11 @@ const validateEvent = [
         .withMessage('Venue does not exist'),
     check('price')
         .exists({ checkFalsy: true })
-        .isNumeric({
-            min: 0,
-            max: 5000
+        .custom(val => {
+            if(val < 0) return false
+            if(Number(val) !== val) return false
+
+            else return true
         })
         .withMessage('Price is invalid'),
     check('name')

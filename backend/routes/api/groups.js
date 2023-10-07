@@ -13,11 +13,11 @@ const validateNewGroup = [
     check('name')
         .exists({ checkFalsy: true })
         .isLength({max: 60})
-        .withMessage('name must be 60 characters or less'),
+        .withMessage('Name must be 60 characters or less'),
     check('about')
         .exists({ checkFalsy: true })
         .isLength({min: 50})
-        .withMessage('name must be 50 characters or more'),
+        .withMessage('About must be 50 characters or more'),
     check('type')
         .isIn(['In person', 'Online'])
         .withMessage("Type must be 'Online' or 'In person'"),
@@ -206,7 +206,7 @@ router.delete('/:groupId/membership', requireAuth, async (req, res) => {
     }
     let membership = await Membership.findOne({
         where: {
-            id: memberId,
+            userId: memberId,
             groupId: req.params.groupId
         }
     })
@@ -662,7 +662,7 @@ router.get('/current', requireAuth, async (req, res) => {
                         }
                     }
                 }
-                
+
                 if(!groupObj.numMembers && k == Members.length - 1) groupObj.numMembers = 1
             }
 
