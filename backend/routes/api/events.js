@@ -521,6 +521,8 @@ router.get('/:eventId', async (req, res) => {
     eventJSON.numAttending = numAttending
 
     eventJSON.price = Number(eventJSON.price)
+    eventJSON.Venue.lat = parseFloat(eventJSON.Venue.lat)
+    eventJSON.Venue.lng = parseFloat(eventJSON.Venue.lng)
 
     return res.json(eventJSON)
 })
