@@ -69,9 +69,11 @@ const validateVenue = [
 // FOR VALIDATING A NEW EVENT
 const validateEvent = [
     check('price')
-        .isNumeric({
-            min: 0,
-            max: 5000,
+        .custom(val => {
+            if(val < 0) return false
+            if(isNaN(val)) return false
+
+            else return true
         })
         .withMessage('Price is invalid'),
     check('name')
