@@ -965,7 +965,7 @@ router.delete('/:groupId', requireAuth, async (req, res) => {
     if(group.organizerId != req.user.id) {
         return res.status(403).json({
             name: 'Authorization Error',
-            message: 'You must be the organizer of the group to edit Group'
+            message: 'You must be the organizer of the group to delete Group'
         })
     }
 

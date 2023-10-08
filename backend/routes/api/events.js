@@ -336,7 +336,7 @@ router.delete('/:eventId', requireAuth, async (req, res) => {
     if(group.organizerId != req.user.id && (!userMemberships || userMemberships.status != 'co-host')) {
         return res.status(403).json({
             name: 'Authorization Error',
-            message: 'You must be the organizer of the group or have co-host status to view venues'
+            message: 'You must be the organizer of the group or have co-host status to delete events'
         })
     }
 
