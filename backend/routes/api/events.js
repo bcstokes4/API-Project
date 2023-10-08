@@ -583,8 +583,8 @@ const queryValidation = [
         .optional()
         .custom(val => {
             if(!val) return true
-            if(val == 'In person') return true
-            if(val == 'Online') return true
+            if(val == 'In person' || val == "In person") return true
+            if(val == 'Online' || val == "Online") return true
 
             else return false
         })

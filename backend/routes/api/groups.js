@@ -206,20 +206,9 @@ router.delete('/:groupId/membership', requireAuth, async (req, res) => {
             message: "Group couldn't be found"
         })
     }
-    let membership = await Membership.findOne({
-        where: {
-            userId: memberId,
-            groupId: req.params.groupId
-        }
-    })
-    if(!membership) {
-        return res.status(404).json({
-             message: "Membership does not exist for this User"
-         })
-     }
     let user = await User.findOne({
         where: {
-            id: membership.userId
+            id: req.body.memberId
         }
     })
     if(!user){
@@ -230,6 +219,18 @@ router.delete('/:groupId/membership', requireAuth, async (req, res) => {
             }
           })
     }
+    let membership = await Membership.findOne({
+        where: {
+            userId: memberId,
+            groupId: req.params.groupId
+        }
+    })
+    // return res.json(membership)
+    if(!membership) {
+        return res.status(404).json({
+             message: "Membership does not exist for this User"
+         })
+     }
     if(group.organizerId != req.user.id && membership.userId != req.user.id){
         return res.status(403).json({
             name: 'Authorization Error',
@@ -238,9 +239,9 @@ router.delete('/:groupId/membership', requireAuth, async (req, res) => {
     }
 
     else {
-        const membership = await Membership.findOne({
-            where: {id: req.body.memberId}
-        })
+        // const membership = await Membership.findOne({
+        //     where: {id: req.body.memberId}
+        // })
        await membership.destroy()
 
        return res.json({
