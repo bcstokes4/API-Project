@@ -106,6 +106,16 @@ router.put('/:eventId/attendance', requireAuth, async (req, res) => {
             message: "Event couldn't be found"
         })
     }
+    const user = await User.findOne({
+        where:{
+            id: req.body.userId
+        }
+    })
+    if(!user) {
+        return res.status(400).json({
+            message: "User does not exist"
+        })
+    }
 
     //Authorization: user must organizer or co-host
     const group = await Group.findOne({
@@ -382,7 +392,7 @@ router.post('/:eventId/images', requireAuth, async (req, res) => {
     if((!userAttendance || userAttendance.status != 'attending') && (group.organizerId != req.user.id) && (!membership || membership.status != 'co-host')) {
         return res.status(403).json({
             name: 'Authorization Error',
-            message: 'Current User must be an attendee, host, or co-host of the event'
+            message: 'Current User must be an attendee, host, or co-host of the event to add images'
         })
     }
 

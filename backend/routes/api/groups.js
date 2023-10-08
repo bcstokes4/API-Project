@@ -420,7 +420,7 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res) => 
     if(group.organizerId != req.user.id && (!userMemberships || userMemberships.status != 'co-host')) {
        return res.status(403).json({
             name: 'Authorization Error',
-            message: 'You must be the organizer of the group or have co-host status to view venues'
+            message: 'You must be the organizer of the group or have co-host status to create event'
         })
     }
     const {venueId, name, type, capacity, price, description, startDate, endDate} = req.body
@@ -608,7 +608,7 @@ router.post('/:groupId/venues', requireAuth, validateVenue, async (req, res) => 
     if(group.organizerId != req.user.id && (!userMemberships || userMemberships.status != 'co-host')) {
         return res.status(403).json({
             name: 'Authorization Error',
-            message: 'You must be the organizer of the group or have co-host status to view venues'
+            message: 'You must be the organizer of the group or have co-host status to create venues'
         })
     }
     const {address, city, state, lat, lng} = req.body
