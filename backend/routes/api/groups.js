@@ -814,7 +814,7 @@ router.get('/:groupId', async (req, res) => {
     groupsJSON.Organizer = organizer
 
     for (let i = 0; i < groupsJSON.Venues.length; i++) {
-        const venueObj = groupsJSON.Venues[i].toJSON();
+        const venueObj = groupsJSON.Venues[i];
 
         venueObj.lat = parseFloat(venueObj.lat)
         venueObj.lng = parseFloat(venueObj.lng)
