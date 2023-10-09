@@ -300,7 +300,7 @@ for (let i = 0; i < attendees.length; i++) {
     const {firstName, lastName} = user
 
     // for non-host or co-host users
-    if(group.organizerId != req.user.id || (userMembership && userMembership.status != 'co-host')) {
+    if(group.organizerId != req.user.id && (userMembership && userMembership.status != 'co-host')) {
             if(attendeeObj.status == 'pending') continue
     }
 
