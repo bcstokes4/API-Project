@@ -1,3 +1,4 @@
+```
 store = {
   session: {},
   groups: {
@@ -45,3 +46,4 @@ store = {
     },
   },
 };
+```
