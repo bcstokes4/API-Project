@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 ```
 store = {
+=======
+```store = {
+>>>>>>> frontend-auth-me
   session: {},
   groups: {
     allGroups: {
