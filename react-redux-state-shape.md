@@ -1,4 +1,4 @@
-store = {
+```store = {
   session: {},
   groups: {
     allGroups: {
@@ -44,4 +44,4 @@ store = {
       Attendees: [attendeeData],
     },
   },
-};
+};```
