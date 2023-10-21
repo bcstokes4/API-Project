@@ -17,6 +17,7 @@ function SignupFormModal() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (password === confirmPassword) {
       setErrors({});
       return dispatch(
@@ -27,7 +28,7 @@ function SignupFormModal() {
           lastName,
           password,
         })
-      )
+        )
         .then(closeModal)
         .catch(async (res) => {
           const data = await res.json();
@@ -35,7 +36,7 @@ function SignupFormModal() {
             setErrors(data.errors);
           }
         });
-    }
+      }
     return setErrors({
       confirmPassword: "Confirm Password field must be the same as the Password field"
     });
