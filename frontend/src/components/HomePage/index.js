@@ -24,7 +24,7 @@ function HomePage() {
             <div className='section-3'>
                 <div className='s3-container-1'>
                     <img src={img1} className='section-3-images'/>
-                    <Link className='s3-links'>See all groups</Link>
+                    <Link to='/groups' className='s3-links'>See all groups</Link>
                     <p>placeholder text blablabla</p>
                 </div>
                 <div className='s3-container-2'>

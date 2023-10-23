@@ -1,0 +1,29 @@
+
+.groups-main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-top: 80px;
+}
+
+.groups-main-links {
+    font-size: 35px;
+    display: flex;
+    gap: 20px;
+}
+h4 {
+    font-size: 16px;
+    color: grey;
+}
+.groups-main-groups-link {
+    color: teal;
+}
+.groups-main-event-link {
+    text-decoration: none;
+    color: grey;
+}
+.groups-main-event-link:hover {
+    text-decoration: underline;
+}

@@ -31,7 +31,7 @@ module.exports = {
       {
         organizerId: 3,
         name: "Evening Rocket League Group",
-        about: "Every Friday night, we join an xbox live party chat and run some Rocket League tournaments. We are all hardstuck diamond, so come one come all fellow scrubs!",
+        about: "Every Friday night, we join a giant xbox live party chat and play some games together",
         type: "Online",
         private: true,
         city: "Ney York",
