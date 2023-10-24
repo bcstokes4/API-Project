@@ -18,17 +18,17 @@ module.exports = {
       },
       {
         groupId: 1,
-        url: 'group1pic2.com',
+        url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoflf9esjoHLCtf-h8d6MlXP_o4N2mJa1Thg&usqp=CAU',
         preview: false
       },
       {
         groupId: 2,
-        url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp95685AmYgbDpDpthS2uBiAmcgvGFD2341g&usqp=CAU',
+        url: 'https://curlytales.com/wp-content/uploads/2020/03/s2.jpg',
         preview: true
       },
       {
         groupId: 3,
-        url: 'https://curlytales.com/wp-content/uploads/2020/03/s2.jpg',
+        url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp95685AmYgbDpDpthS2uBiAmcgvGFD2341g&usqp=CAU',
         preview: true
       },
       {

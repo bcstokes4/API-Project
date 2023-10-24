@@ -39,7 +39,7 @@ const validateEvent = [
         .withMessage('Description is required'),
     check('startDate')
         .isISO8601('yyyy-mm-dd')
-        .isAfter('2023-01-01')
+        .isAfter('2023-10-23')
         .withMessage('Start date must be in the future'),
     handleValidationErrors
 ]
@@ -631,7 +631,7 @@ router.get('/', queryValidation, async (req, res) => {
 
 
     const Events = await Event.findAll({
-        attributes: {exclude: ['createdAt', 'updatedAt', 'description', 'capacity', 'price']},
+        attributes: {exclude: ['createdAt', 'updatedAt', 'capacity', 'price']},
         include: [
             {
             model: Group,

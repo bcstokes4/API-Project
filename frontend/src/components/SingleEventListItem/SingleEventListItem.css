@@ -1,0 +1,17 @@
+.eventlist-item-container {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid grey;
+    gap: 18px;
+}
+.eventlist-item-top-container{
+    display: flex;
+    gap: 10px;
+}
+.eventlist-item-container:hover {
+    cursor: pointer;
+}
+.eventlist-item-top-container > img {
+    width: 200px;
+    height: 200px;
+}

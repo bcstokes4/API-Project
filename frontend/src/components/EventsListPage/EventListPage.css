@@ -1,5 +1,4 @@
-
-.groups-main-container {
+.events-main-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,22 +7,22 @@
     padding-top: 80px;
 }
 
-.groups-main-links {
+.events-main-links {
     font-size: 35px;
     display: flex;
     gap: 20px;
 }
-.groups-main-container > h4 {
+.events-main-container > h4 {
     font-size: 16px;
     color: grey;
 }
-.groups-main-groups-link {
-    color: teal;
-}
-.groups-main-event-link {
+.events-main-groups-link {
     text-decoration: none;
     color: grey;
 }
-.groups-main-event-link:hover {
+.events-main-event-link {
+    color: teal;
+}
+.events-main-groups-link:hover {
     text-decoration: underline;
 }

@@ -4,7 +4,13 @@
     border-top: 1px solid grey;
     gap: 18px;
 }
-img {
+.grouplist-item-container:hover {
+    cursor: pointer;
+}
+.grouplist-item-container > img {
     width: 200px;
     height: 200px;
+}
+.grouplist-item-link {
+    text-decoration: none;
 }

@@ -12,8 +12,8 @@ module.exports = {
     await Group.bulkCreate([
       {
         organizerId: 1,
-        name: "Evening Tennis on the Water",
-        about: "Enjoy rounds of tennis with a tight-nit group of people on the water facing the Brooklyn Bridge. Singles or doubles.",
+        name: "Ace Racketeers",
+        about: "Whether you're perfecting your backhand or aiming for aces, our group offers a friendly and supportive environment for you to enjoy the court. Let's rally together for the love of tennis!",
         type: "In person",
         private: true,
         city: "New York",
