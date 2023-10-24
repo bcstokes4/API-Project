@@ -10,13 +10,16 @@ const getOneGroup = (group) => {
 }
 
 export const getOneGroupThunk = (groupId) => async (dispatch) => {
-
+    
     const response = await csrfFetch(`/api/groups/${groupId}`)
 
     if (response.ok) {
         const group = await response.json()
         dispatch(getOneGroup(group))
         return group
+    } else {
+        const errorData = response.json()
+        console.error('Error', errorData)
     }
 }
 

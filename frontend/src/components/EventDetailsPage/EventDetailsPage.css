@@ -1,0 +1,15 @@
+.event-details-top-div {
+    border: 3px solid rebeccapurple;
+    /* background-color: aqua; */
+}
+.event-details-bottom-upper-div{
+    border: 2px solid red;
+    display: flex;
+}
+.event-details-description-div{
+    border: 2px solid blue;
+}
+.event-details-group-info-container{
+    border: 2px solid seagreen;
+    display: flex;
+}
