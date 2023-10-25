@@ -2,3 +2,58 @@
 .errors{
     color: red
 }
+.login-form-main-container {
+    /* border: 2px solid rebeccapurple; */
+    width: 500px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 35px;
+    padding: 20px;
+}
+.login-form-container {
+    /* border-radius: 15px; */
+    /* border: 2px solid red; */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+}
+.login-form-container > * {
+    width: 100%;
+}
+.login-input-username{
+    width: 98.5%;
+    height: 30px;
+}
+.login-input-username:hover {
+    cursor: pointer;
+}
+.login-input-password{
+    width: 98.5%;
+    height: 30px;
+}
+.login-input-password:hover{
+    cursor: pointer;
+}
+.login-input-submit-button{
+    height: 30px;
+}
+.login-input-submit-button:hover{
+    cursor: pointer;
+}
+.login-form-errors{
+    color: red;
+}
+.demo-user-button{
+    margin-top: 15px;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    font-size: 15px;
+}
+.demo-user-button:hover{
+    cursor: pointer;
+    font-weight: 600;
+}

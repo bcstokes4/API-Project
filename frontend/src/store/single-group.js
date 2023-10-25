@@ -1,6 +1,7 @@
 import { csrfFetch } from "./csrf";
 
 const GET_ONE_GROUP = 'groups/getonegroup'
+// const CREATE_GROUP = 'groups/creategroup'
 
 const getOneGroup = (group) => {
     return {
@@ -9,8 +10,45 @@ const getOneGroup = (group) => {
     }
 }
 
+// POST GROUP
+export const postOneGroupThunk = (reqBody) => async (dispatch) => {
+
+    const response = await csrfFetch('/api/groups', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reqBody)
+    })
+
+    if (response.ok) {
+        const group = await response.json()
+
+        dispatch(getOneGroupThunk(group.id))
+        return group
+    } else {
+        const errorData = response.json()
+        console.error('Error', errorData)
+    }
+
+}
+//POST GROUP PICTURE
+export const postOneGroupPictureThunk = (groupId, reqBody) => async (dispatch) => {
+    const response = await csrfFetch(`/api/groups/${groupId}/images`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reqBody)
+    })
+    if (response.ok) {
+        const group = await response.json()
+
+        return group
+    } else {
+        const errorData = response.json()
+        console.error('Error', errorData)
+    }
+}
+
 export const getOneGroupThunk = (groupId) => async (dispatch) => {
-    
+
     const response = await csrfFetch(`/api/groups/${groupId}`)
 
     if (response.ok) {

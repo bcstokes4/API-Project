@@ -28,6 +28,9 @@
     border-radius: 5px;
     box-shadow: 2px 2px ;
 }
+.group-details-top-text-container > button:hover {
+    cursor: pointer;
+}
 .group-details-events-div {
     background-color: #CDCDCD;
     margin-bottom: 0px;

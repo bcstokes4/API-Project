@@ -34,7 +34,7 @@ function HomePage() {
                 </div>
                 <div className='s3-container-3'>
                     <img src={img3} className='section-3-images'/>
-                    <Link className='s3-links'>Start a new group</Link>
+                    <Link to='/groups/new' className='s3-links'>Start a new group</Link>
                     <p>make sure to disable when logged out... placeholder text blablabla</p>
                 </div>
             </div>

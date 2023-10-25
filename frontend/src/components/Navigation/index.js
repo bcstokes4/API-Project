@@ -13,10 +13,12 @@ function Navigation({ isLoaded }){
       <li>
         <NavLink exact to="/" className="Mingle-logo">Mingle</NavLink>
       </li>
-      {isLoaded && (
+      {isLoaded && (<div className='create-group-login-div'>
+        {sessionUser && (<NavLink to='/groups/new'>Start a new group</NavLink>)}
         <li>
           <ProfileButton user={sessionUser} />
         </li>
+        </div>
       )}
     </ul>
     </div>

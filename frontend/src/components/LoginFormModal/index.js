@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
+import { useHistory } from 'react-router-dom'
 import "./LoginForm.css";
 
 function LoginFormModal() {
@@ -10,6 +11,7 @@ function LoginFormModal() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
+  const history = useHistory()
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,35 +25,49 @@ function LoginFormModal() {
         }
       });
   };
-
+  const demoLogin = (e) => {
+    e.preventDefault();
+    // return
+    dispatch(sessionActions.login({
+      credential: 'Demo-lition',
+      password: 'password'
+    }))
+    .then(closeModal)
+    history.push('/')
+  };
   return (
-    <>
+    <div className="login-form-main-container">
       <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="login-form-container">
         <label>
-          Username or Email
+
           <input
+            className="login-input-username"
             type="text"
             value={credential}
+            placeholder="Username or Email"
             onChange={(e) => setCredential(e.target.value)}
             required
           />
         </label>
         <label>
-          Password
+
           <input
+            className="login-input-password"
             type="password"
             value={password}
+            placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </label>
         {errors.credential && (
-          <p>{errors.credential}</p>
+          <p className="login-form-errors">{errors.credential}</p>
         )}
-        <button type="submit">Log In</button>
+        <button type="submit" className="login-input-submit-button" disabled={credential.length < 4 || password.length < 6}>Log In</button>
       </form>
-    </>
+      <button className="demo-user-button" onClick={demoLogin}>Demo User</button>
+    </div>
   );
 }
 
