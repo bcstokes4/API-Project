@@ -1,34 +1,39 @@
 import './GroupDetailsPage.css'
-import {useParams} from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { useEffect } from 'react';
-import {useDispatch, useSelector} from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getOneGroupThunk } from '../../store/single-group';
 import { getAllEventsThunk } from '../../store/events';
 import { Link } from 'react-router-dom';
 import GroupDetailsListEvents from '../GroupDetailsListEvents';
 
-function GroupDetailsPage() {
-    let {groupId} = useParams()
-    const dispatch = useDispatch()
 
-    const group = useSelector( state => state.singleGroup)
+function GroupDetailsPage() {
+    let { groupId } = useParams()
+    const dispatch = useDispatch()
+    const history = useHistory()
+
+    const group = useSelector(state => state.singleGroup)
     const eventsObj = useSelector(state => state.events)
+    const sessionUser = useSelector((state) => state.session.user)
 
     const events = Object.values(eventsObj)
 
-    useEffect( () => {
+    useEffect(() => {
         dispatch(getOneGroupThunk(groupId))
         dispatch(getAllEventsThunk())
     }, [dispatch, groupId])
 
-
+    const updateGroupRedirect = () => {
+        history.push(`/groups/${groupId}/edit`)
+    }
     let objCheck = Object.keys(group)
 
-    if(!objCheck.length || !events.length) return null
+    if (!objCheck.length || !events.length) return null
 
     let eventCount = 0
-    events.forEach( event => {
-        if(event.groupId === group.id) eventCount++
+    events.forEach(event => {
+        if (event.groupId === group.id) eventCount++
     })
 
 
@@ -37,7 +42,7 @@ function GroupDetailsPage() {
     for (let i = 0; i < images.length; i++) {
         const obj = images[i]
 
-        if(obj.preview) {
+        if (obj.preview) {
             url = obj.url
         }
     }
@@ -47,16 +52,27 @@ function GroupDetailsPage() {
             <div className='group-details-top-div'>
                 <div className='group-details-top-image-div'>
                     <Link to='/groups'> {"<"} Groups </Link>
-                    <img src={`${url}`} alt='group-image'/>
+                    <img src={`${url}`} alt='group-image' />
                 </div>
                 <div className='group-details-top-text-container'>
                     <div className='group-details-top-inner-container'>
                         <h2>{group.name}</h2>
                         <h3>{group.city}, {group.state}</h3>
-                        <span>{eventCount} {eventCount === 1 ? 'Event': 'Events'}</span> <span> {group.private ? ' - private': ' - public'}</span>
+                        <span>{eventCount} {eventCount === 1 ? 'Event' : 'Events'}</span> <span> {group.private ? ' - private' : ' - public'}</span>
                         <h4>Organized by  {organizer.firstName} {organizer.lastName}</h4>
                     </div>
-                    <button onClick={() => alert('Feature Coming Soon...')}>Join this group</button>
+                    {sessionUser && sessionUser.id !== organizer.id && (
+                        <button onClick={() => alert('Feature Coming Soon...')}>
+                            Join this group
+                        </button>)}
+                    {sessionUser && sessionUser.id === organizer.id && (
+                        <div className='organizer-group-buttons-container'>
+                            <button>Create Event</button>
+                            <button onClick={updateGroupRedirect}>Update</button>
+                            <button>Delete</button>
+                        </div>
+
+                    )}
                 </div>
             </div>
             <div className='group-details-events-div'>
@@ -68,7 +84,7 @@ function GroupDetailsPage() {
                     <h3>What we're about</h3>
                     <h4>{group.about}</h4>
                 </div>
-            <GroupDetailsListEvents events={events} groupId={groupId}/>
+                <GroupDetailsListEvents events={events} groupId={groupId} />
             </div>
         </div>
     )

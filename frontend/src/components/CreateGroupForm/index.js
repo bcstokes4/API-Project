@@ -1,7 +1,6 @@
 import './CreateGroupForm.css'
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { csrfFetch } from '../../store/csrf';
 import { postOneGroupThunk } from '../../store/single-group';
 import { postOneGroupPictureThunk } from '../../store/single-group';
 import {useDispatch, useSelector} from 'react-redux'
@@ -19,7 +18,7 @@ function CreateGroupForm() {
     const [url, setUrl] = useState('')
     const [errors, setErrors] = useState({})
     const [errorsOnSubmit, setErrorsOnSubmit] = useState({})
-    
+
     let locationParts = location.split(',')
     let state = locationParts[1]
     let city = locationParts[0]

@@ -22,9 +22,18 @@ function GroupDetailsListEvents({ events, groupId }) {
         }
         else pastEvents.push(event)
     }
+    futureEvents.sort((a, b) => {
+        const dateA = new Date(a.startDate);
+        const dateB = new Date(b.startDate);
+        return dateA - dateB;
+      });
+    pastEvents.sort((a, b) => {
+        const dateA = new Date(a.startDate);
+        const dateB = new Date(b.startDate);
+        return dateB - dateA;
+      });
 
-    // console.log('FUTURE EVENTS', futureEvents)
-    // console.log('PAST EVENTS', pastEvents)
+
     return (
         <div className="group-details-event-list-main-container">
             <h2 className='upcoming-event-heading'>Upcoming Events ({futureEvents.length})</h2>
