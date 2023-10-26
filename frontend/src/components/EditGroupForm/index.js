@@ -8,6 +8,7 @@ function EditGroupForm() {
     const { groupId } = useParams();
     const dispatch = useDispatch()
 
+    const sessionUser = useSelector((state) => state.session.user);
     const groupObj = useSelector((state) => state.groups);
     const group = groupObj[groupId];
 
@@ -20,7 +21,11 @@ function EditGroupForm() {
     console.log(group)
 
     if (!group) return null;
-    
+    if (!sessionUser || group.organizerId !== sessionUser.id) {
+        return (
+            <h1>YOU CAN'T BE HERE SILLY GOOSE</h1>
+        )
+      }
     group.location = group.city + ',' + group.state
     group.visibility = group.private ? 'Private' : 'Public'
 
