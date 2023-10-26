@@ -1,0 +1,35 @@
+
+.group-details-future-event-div{
+    /* border: 1px solid red; */
+    width: 45%;
+    background-color: white;
+    border-radius: 7px;
+    padding: 8px;
+}
+.group-details-past-event-div{
+    /* border: 1px solid red; */
+    width: 45%;
+    background-color: white;
+    border-radius: 7px;
+    padding: 8px;
+}
+
+.group-details-event-list-main-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    background-color: #CDCDCD;
+}
+
+.upcoming-event-heading {
+    font-size: 30px;
+}
+.group-details-future-event-top-half{
+    display: flex;
+    gap: 10px;
+}
+.group-details-past-event-top-half{
+    display: flex;
+    gap: 10px;
+}

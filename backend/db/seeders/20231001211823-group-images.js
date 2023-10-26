@@ -13,22 +13,22 @@ module.exports = {
     await GroupImage.bulkCreate([
       {
         groupId: 1,
-        url: 'group1pic1.com',
+        url: 'https://t2.gstatic.com/images?q=tbn:ANd9GcQBXYDl8cxip0vaBBwczT9gDHz3ebxIz_Fk0UYynfNEgv92fqr2',
         preview: true
       },
       {
         groupId: 1,
-        url: 'group1pic2.com',
+        url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoflf9esjoHLCtf-h8d6MlXP_o4N2mJa1Thg&usqp=CAU',
         preview: false
       },
       {
         groupId: 2,
-        url: 'group2pic1.com',
+        url: 'https://curlytales.com/wp-content/uploads/2020/03/s2.jpg',
         preview: true
       },
       {
         groupId: 3,
-        url: 'group3pic1.com',
+        url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp95685AmYgbDpDpthS2uBiAmcgvGFD2341g&usqp=CAU',
         preview: true
       },
       {

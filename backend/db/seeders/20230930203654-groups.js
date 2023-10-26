@@ -12,8 +12,8 @@ module.exports = {
     await Group.bulkCreate([
       {
         organizerId: 1,
-        name: "Evening Tennis on the Water",
-        about: "Enjoy rounds of tennis with a tight-nit group of people on the water facing the Brooklyn Bridge. Singles or doubles.",
+        name: "Ace Racketeers",
+        about: "Whether you're perfecting your backhand or aiming for aces, our group offers a friendly and supportive environment for you to enjoy the court. Let's rally together for the love of tennis!",
         type: "In person",
         private: true,
         city: "New York",
@@ -31,7 +31,7 @@ module.exports = {
       {
         organizerId: 3,
         name: "Evening Rocket League Group",
-        about: "Every Friday night, we join an xbox live party chat and run some Rocket League tournaments. We are all hardstuck diamond, so come one come all fellow scrubs!",
+        about: "Every Friday night, we join a giant xbox live party chat and play some games together",
         type: "Online",
         private: true,
         city: "Ney York",

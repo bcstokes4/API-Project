@@ -1,3 +1,38 @@
 .hidden {
     display: none;
   }
+  @font-face {
+    font-family: mingle-logo;
+    src: url(./Satisfy-Regular.ttf);
+  }
+  body {
+    margin: 0;
+  }
+  .header-div {
+    border-bottom: 2px solid gray;
+  }
+  .header-ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 0px;
+    padding: 0 20px;
+
+    /* flex-direction: row; */
+    list-style-type: none;
+  }
+  .Mingle-logo {
+    color: #ff1154;
+    font-family: mingle-logo;
+    font-weight: 900;
+    font-size: 50px;
+  }
+
+  .Mingle-logo {
+    text-decoration: none;
+  }
+  .create-group-login-div{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }

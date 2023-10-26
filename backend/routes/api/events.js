@@ -39,7 +39,7 @@ const validateEvent = [
         .withMessage('Description is required'),
     check('startDate')
         .isISO8601('yyyy-mm-dd')
-        .isAfter('2023-01-01')
+        .isAfter('2023-10-23')
         .withMessage('Start date must be in the future'),
     handleValidationErrors
 ]
@@ -531,8 +531,10 @@ router.get('/:eventId', async (req, res) => {
     eventJSON.numAttending = numAttending
 
     eventJSON.price = Number(eventJSON.price)
-    eventJSON.Venue.lat = parseFloat(eventJSON.Venue.lat)
-    eventJSON.Venue.lng = parseFloat(eventJSON.Venue.lng)
+    if(eventJSON.Venue) {
+        eventJSON.Venue.lat = parseFloat(eventJSON.Venue.lat)
+        eventJSON.Venue.lng = parseFloat(eventJSON.Venue.lng)
+    }
 
     return res.json(eventJSON)
 })
@@ -631,7 +633,7 @@ router.get('/', queryValidation, async (req, res) => {
 
 
     const Events = await Event.findAll({
-        attributes: {exclude: ['createdAt', 'updatedAt', 'description', 'capacity', 'price']},
+        attributes: {exclude: ['createdAt', 'updatedAt', 'capacity', 'price']},
         include: [
             {
             model: Group,

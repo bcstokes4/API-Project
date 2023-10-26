@@ -8,16 +8,20 @@ function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
 
   return (
-    <ul>
+    <div className='header-div'>
+    <ul className='header-ul'>
       <li>
-        <NavLink exact to="/">Home</NavLink>
+        <NavLink exact to="/" className="Mingle-logo">Mingle</NavLink>
       </li>
-      {isLoaded && (
+      {isLoaded && (<div className='create-group-login-div'>
+        {sessionUser && (<NavLink to='/groups/new'>Start a new group</NavLink>)}
         <li>
           <ProfileButton user={sessionUser} />
         </li>
+        </div>
       )}
     </ul>
+    </div>
   );
 }
 
