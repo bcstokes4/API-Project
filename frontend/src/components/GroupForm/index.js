@@ -29,8 +29,8 @@ function GroupForm({group, formAction}) {
     const [errors, setErrors] = useState({})
     const [errorsOnSubmit, setErrorsOnSubmit] = useState({})
 
-    console.log('group PROP', group)
-    console.log('visibility stateVariable', visibility)
+    // console.log('group PROP', group)
+    // console.log('visibility stateVariable', visibility)
     let locationParts = location.split(',')
     let state = locationParts[1]
     let city = locationParts[0]
@@ -47,6 +47,9 @@ function GroupForm({group, formAction}) {
     // let urlEnding = url[1]
     // console.log(urlEnding)
 
+    function isImgUrl(url) {
+        return /\.(jpg|jpeg|png|webp|avif|gif)$/.test(url)
+      }
 
     useEffect( () => {
         let errorsObj = {}
@@ -70,8 +73,6 @@ function GroupForm({group, formAction}) {
         if(!location.length){
             errorsObj.location = 'Location is required'
         }
-
-
         if(type !== 'Online' && type != 'In person'){
             errorsObj.type = 'Group Type is required'
         }
@@ -79,7 +80,7 @@ function GroupForm({group, formAction}) {
             errorsObj.visibility = 'Visibility Type is required'
         }
 
-        if(formAction !== 'edit' && !url.includes(".png") && !url.includes(".jpg") && !url.includes(".jpeg")){
+        if(isImgUrl(url)){
             errorsObj.url = 'url must be jpg, jpeg or png'
         }
 

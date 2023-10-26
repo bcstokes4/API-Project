@@ -13,22 +13,22 @@ module.exports = {
     await GroupImage.bulkCreate([
       {
         groupId: 1,
-        url: 'https://t2.gstatic.com/images?q=tbn:ANd9GcQBXYDl8cxip0vaBBwczT9gDHz3ebxIz_Fk0UYynfNEgv92fqr2',
+        url: 'https://64.media.tumblr.com/bc93f88fc6fa5d3b0a6590c7c1a8a75f/b185e2807242f3cf-27/s640x960/85935da9755b074b99cf29d9473574a56379790d.jpg',
         preview: true
       },
       {
         groupId: 1,
-        url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoflf9esjoHLCtf-h8d6MlXP_o4N2mJa1Thg&usqp=CAU',
+        url: 'https://64.media.tumblr.com/5175344035942c7d3e3944eafbb3ffcb/fdaaa89f914a5dfa-52/s640x960/38612de885d26550c5068825f881d122ef21ff63.jpg',
         preview: false
       },
       {
         groupId: 2,
-        url: 'https://curlytales.com/wp-content/uploads/2020/03/s2.jpg',
+        url: 'https://media.istockphoto.com/id/1366345239/vector/healthy-sleep-concept-beautiful-woman-sleeping-happily-on-bed-at-night-time-vector.jpg?s=612x612&w=0&k=20&c=gy8uleSks_RxlCKPLksCUdxZcrMxyC5nhcz1VhTOaqE=',
         preview: true
       },
       {
         groupId: 3,
-        url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp95685AmYgbDpDpthS2uBiAmcgvGFD2341g&usqp=CAU',
+        url: 'https://64.media.tumblr.com/3835ae87038a8f4088ada7f809d385cf/a9b42fbf0789ac21-9d/s640x960/c7227f38df8ef34585c5c8ea96903189aa4c5db1.pnj',
         preview: true
       },
       {
