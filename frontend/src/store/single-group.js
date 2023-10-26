@@ -1,12 +1,40 @@
 import { csrfFetch } from "./csrf";
-
+import { getAllGroupsThunk } from "./groups";
 const GET_ONE_GROUP = 'groups/getonegroup'
 // const CREATE_GROUP = 'groups/creategroup'
+const UPDATE_GROUP = 'groups/updategroup'
 
 const getOneGroup = (group) => {
     return {
         type: GET_ONE_GROUP,
         group
+    }
+}
+
+const updateGroup= (group) => ({
+    type: UPDATE_GROUP,
+    group,
+  });
+
+
+//EDIT A GROUP THUNK
+export const editOneGroupThunk = (groupId, reqBody) => async (dispatch) => {
+    const response = await csrfFetch(`/api/groups/${groupId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reqBody)
+    })
+
+    if (response.ok) {
+        const group = await response.json()
+
+        dispatch(getOneGroupThunk(group.id))
+        dispatch(getAllGroupsThunk())
+        // console.log('FETCH GROUP EDIT', group)
+        return group
+    } else {
+        const errorData = response.json()
+        console.error('Error', errorData)
     }
 }
 

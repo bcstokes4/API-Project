@@ -22,12 +22,13 @@ function App() {
     <>
       <Navigation isLoaded={isLoaded} />
       {isLoaded && <Switch>
+        <Route exact path='/groups/:groupId/edit'>
+          <EditGroupForm/>
+        </Route>
         <Route exact path='/'>
           <HomePage/>
         </Route>
         <Route path='/groups/new' component={CreateGroupForm}>
-        </Route>
-        <Route exact path='groups/:groupId/edit' component={EditGroupForm}>
         </Route>
         <Route path='/groups/:groupId'>
           <GroupDetailsPage/>

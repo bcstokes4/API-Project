@@ -24,9 +24,12 @@ function GroupDetailsPage() {
         dispatch(getAllEventsThunk())
     }, [dispatch, groupId])
 
-    const updateGroupRedirect = () => {
+    const updateGroupRedirect = (e) => {
+        e.preventDefault()
+        
         history.push(`/groups/${groupId}/edit`)
     }
+
     let objCheck = Object.keys(group)
 
     if (!objCheck.length || !events.length) return null
@@ -68,7 +71,7 @@ function GroupDetailsPage() {
                     {sessionUser && sessionUser.id === organizer.id && (
                         <div className='organizer-group-buttons-container'>
                             <button>Create Event</button>
-                            <button onClick={updateGroupRedirect}>Update</button>
+                            <button onClick={(e) => updateGroupRedirect(e) }>Update</button>
                             <button>Delete</button>
                         </div>
 
