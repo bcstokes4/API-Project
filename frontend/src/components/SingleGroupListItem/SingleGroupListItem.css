@@ -7,8 +7,9 @@
 .grouplist-item-container:hover {
     cursor: pointer;
 }
-.grouplist-item-container > img {
-    width: 200px;
+.grouplist-img {
+    min-width: 200px;
+    max-width: 200px;
     height: 200px;
 }
 .grouplist-item-link {

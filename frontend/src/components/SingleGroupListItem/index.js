@@ -15,7 +15,7 @@ function SingleGroupListItem({group, events}) {
     }
     return (
         <div className='grouplist-item-container' onClick={routeChange}>
-            <img src={group.previewImage}/>
+            <img src={group.previewImage} className='grouplist-img'/>
             <div className='grouplist-item-text-container'>
                 <h2>{group.name}</h2>
                 <h3>{group.city}, {group.state}</h3>

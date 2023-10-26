@@ -75,6 +75,26 @@ export const postOneGroupPictureThunk = (groupId, reqBody) => async (dispatch) =
     }
 }
 
+//DELETE GROUP THUNK
+export const deleteOneGroupThunk = (groupId) => async (dispatch) => {
+    try {
+        const response = await csrfFetch(`/api/groups/${groupId}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' }
+        })
+
+        if (response.ok) {
+            const data = await response.json()
+            dispatch(getAllGroupsThunk())
+
+            return data
+        }
+    }
+    catch(e) {
+        console.error(e)
+    }
+}
+
 export const getOneGroupThunk = (groupId) => async (dispatch) => {
 
     const response = await csrfFetch(`/api/groups/${groupId}`)

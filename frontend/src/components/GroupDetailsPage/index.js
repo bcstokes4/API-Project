@@ -1,12 +1,13 @@
 import './GroupDetailsPage.css'
 import { useParams, useHistory } from 'react-router-dom'
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { getOneGroupThunk } from '../../store/single-group';
 import { getAllEventsThunk } from '../../store/events';
 import { Link } from 'react-router-dom';
 import GroupDetailsListEvents from '../GroupDetailsListEvents';
-
+import { deleteOneGroupThunk } from '../../store/single-group';
+import { useModal } from '../../context/Modal';
 
 function GroupDetailsPage() {
     let { groupId } = useParams()
@@ -17,6 +18,48 @@ function GroupDetailsPage() {
     const eventsObj = useSelector(state => state.events)
     const sessionUser = useSelector((state) => state.session.user)
 
+    // FOR DELETE GROUP MODAL
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const modalContainerRef = useRef();
+
+    const openModal = () => {
+        setIsModalOpen(true);
+      };
+
+      const closeModal = () => {
+        setIsModalOpen(false);
+      };
+
+      // Close the modal if the click is outside the modal container
+      const handleClickOutsideModal = (e) => {
+          if (modalContainerRef.current && !modalContainerRef.current.contains(e.target)) {
+          closeModal();
+        }
+      };
+      useEffect(() => {
+        if (isModalOpen) {
+          document.addEventListener('mousedown', handleClickOutsideModal);
+        } else {
+          document.removeEventListener('mousedown', handleClickOutsideModal);
+        }
+        return () => {
+          document.removeEventListener('mousedown', handleClickOutsideModal);
+        };
+      }, [isModalOpen]);
+
+      const dispatchDelete = async (e) => {
+        e.preventDefault()
+        
+        console.log('handling delete')
+        const response = await dispatch(deleteOneGroupThunk(groupId))
+
+
+        if(response){
+          history.push(`/groups`);
+        }
+      };
+
+
     const events = Object.values(eventsObj)
 
     useEffect(() => {
@@ -26,7 +69,7 @@ function GroupDetailsPage() {
 
     const updateGroupRedirect = (e) => {
         e.preventDefault()
-        
+
         history.push(`/groups/${groupId}/edit`)
     }
 
@@ -52,6 +95,22 @@ function GroupDetailsPage() {
     let organizer = group.Organizer
     return (
         <div className='group-details-main-div'>
+            {isModalOpen && (
+        <div className="delete-modal-container" >
+          <div className="delete-modal-content" ref={modalContainerRef}>
+            <h1>Confirm Delete</h1>
+            <p>Are you sure you want to remove this group?</p>
+            <div className="delete-modal-buttons-container">
+              <button className="delete-modal-confirm-button" onClick={dispatchDelete}>
+                Yes (Delete Group)
+              </button>
+              <button className="delete-modal-revert-button" onClick={closeModal}>
+                No (Keep Group)
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
             <div className='group-details-top-div'>
                 <div className='group-details-top-image-div'>
                     <Link to='/groups'> {"<"} Groups </Link>
@@ -72,7 +131,7 @@ function GroupDetailsPage() {
                         <div className='organizer-group-buttons-container'>
                             <button>Create Event</button>
                             <button onClick={(e) => updateGroupRedirect(e) }>Update</button>
-                            <button>Delete</button>
+                            <button onClick={(e) => openModal()}>Delete</button>
                         </div>
 
                     )}
