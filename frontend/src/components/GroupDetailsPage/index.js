@@ -26,8 +26,12 @@ function GroupDetailsPage() {
 
     const updateGroupRedirect = (e) => {
         e.preventDefault()
-        
+
         history.push(`/groups/${groupId}/edit`)
+    }
+    const createEventRedirect = (e) => {
+        e.preventDefault()
+        history.push(`/groups/${groupId}/events/new`)
     }
 
     let objCheck = Object.keys(group)
@@ -70,7 +74,7 @@ function GroupDetailsPage() {
                         </button>)}
                     {sessionUser && sessionUser.id === organizer.id && (
                         <div className='organizer-group-buttons-container'>
-                            <button>Create Event</button>
+                            <button onClick={(e) => createEventRedirect(e) }>Create Event</button>
                             <button onClick={(e) => updateGroupRedirect(e) }>Update</button>
                             <button>Delete</button>
                         </div>

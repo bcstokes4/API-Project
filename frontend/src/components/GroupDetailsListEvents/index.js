@@ -26,12 +26,12 @@ function GroupDetailsListEvents({ events, groupId }) {
         const dateA = new Date(a.startDate);
         const dateB = new Date(b.startDate);
         return dateA - dateB;
-      });
+    });
     pastEvents.sort((a, b) => {
         const dateA = new Date(a.startDate);
         const dateB = new Date(b.startDate);
         return dateB - dateA;
-      });
+    });
 
 
     return (
@@ -49,14 +49,14 @@ function GroupDetailsListEvents({ events, groupId }) {
                         <div className="group-details-future-event-inner-text">
                             <h3>{startDate} {startTime}</h3>
                             <h3>{event.name}</h3>
-                            {event.venueId ? <h3>{event.Venue.city}, {event.Venue.state}</h3>: <h3>Online</h3>}
+                            {event.venueId ? <h3>{event.Venue.city}, {event.Venue.state}</h3> : <h3>Online</h3>}
                         </div>
                     </div>
                     <p>{event.description}</p>
                 </div>
             })
             }
-    <h2 className='past-event-heading'>Past Events ({pastEvents.length})</h2>
+            <h2 className='past-event-heading'>Past Events ({pastEvents.length})</h2>
             {pastEvents.map(event => {
 
                 let startDate = event.startDate.slice(0, 10)
@@ -70,7 +70,7 @@ function GroupDetailsListEvents({ events, groupId }) {
                         <div className="group-details-past-event-inner-text">
                             <h3>{startDate} {startTime}</h3>
                             <h3>{event.name}</h3>
-                            {event.venueId ? <h3>{event.Venue.city}, {event.Venue.state}</h3>: <h3>Online</h3>}
+                            {event.venueId ? <h3>{event.Venue.city}, {event.Venue.state}</h3> : <h3>Online</h3>}
                         </div>
                     </div>
                     <p>{event.description}</p>

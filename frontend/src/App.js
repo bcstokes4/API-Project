@@ -10,6 +10,8 @@ import EventsListPage from "./components/EventsListPage";
 import EventDetailsPage from "./components/EventDetailsPage";
 import CreateGroupForm from "./components/CreateGroupForm";
 import EditGroupForm from "./components/EditGroupForm";
+import CreateEventForm from "./components/CreateEventForm";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -22,6 +24,9 @@ function App() {
     <>
       <Navigation isLoaded={isLoaded} />
       {isLoaded && <Switch>
+        <Route path='/groups/:groupId/events/new'>
+          <CreateEventForm/>
+        </Route>
         <Route exact path='/groups/:groupId/edit'>
           <EditGroupForm/>
         </Route>
