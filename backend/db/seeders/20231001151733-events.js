@@ -80,7 +80,7 @@ module.exports = {
         venueId: 2,
         groupId: 2,
         name: "Night Owl's Delight",
-        description: "Join us for an educational stargazing and nocturnal wildlife adventure. We'll explore the night sky, enjoy a serene campfire, and listen to the soothing sounds of nature. Connect with fellow night owls in this unique outdoor event that celebrates the beauty of the nighttime world.",
+        description: "Join us for an educational stargazing and nocturnal wildlife adventure. We'll explore the night sky, enjoy a serene campfire, and listen to the soothing sounds of nature.",
         type: 'In person',
         capacity: 30,
         price: 5,
