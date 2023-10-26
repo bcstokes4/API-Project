@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import { editOneGroupThunk } from "../../store/single-group";
 
 function GroupForm({group, formAction}) {
+    let user = useSelector(state => state.session.user)
     let history = useHistory()
     let dispatch = useDispatch()
 
@@ -84,6 +85,13 @@ function GroupForm({group, formAction}) {
 
         setErrors(errorsObj)
     }, [name.length, about.length, location.length, type, visibility])
+
+    //CHECK IF LOGGED IN
+    if(!user) {
+        return (
+            <h1>YOU CANT BE HERE SILLY GOOSE</h1>
+        )
+    }
 
     const resetVariables = () => {
             setLocation('')
