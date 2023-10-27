@@ -23,6 +23,16 @@
 .logged-out-container > * {
     font-size: 25px;
 }
+.log-in-div{
+    color:#ff1154;
+    font-weight: 800;
+    /* font-family: mingle-logo; */
+}
+.sign-up-div{
+    color:#ff1154;
+    font-weight: 800;
+    /* font-family: mingle-logo; */
+}
 .log-in-div:hover{
     text-decoration: underline;
 }
@@ -40,3 +50,6 @@
 .fa-user-circle {
     font-size: 20px;
 }
+.navbar-login-logout-links{
+    color: #ff1154;
+  }

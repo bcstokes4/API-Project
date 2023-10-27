@@ -1,12 +1,15 @@
 .eventlist-item-container {
+    padding-top: 10px;
     display: flex;
     flex-direction: column;
-    border-top: 1px solid grey;
+    border-top: 2px solid grey;
     gap: 18px;
+    max-width: 600px;
 }
 .eventlist-item-top-container{
     display: flex;
-    gap: 10px;
+
+    gap: 20px;
 }
 .eventlist-item-container:hover {
     cursor: pointer;
@@ -14,4 +17,43 @@
 .eventlist-item-top-container > img {
     width: 200px;
     height: 200px;
+}
+.eventlist-img-hover{
+    opacity: .7;
+}
+.eventlist-date-time-container > h4 {
+    color: teal;
+    font-weight: 700;
+    font-size: 19px;
+    margin-top: 4px;
+}
+.eventlist-date-time-container {
+    margin-top: 0;
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+}
+.eventlist-item-container > p {
+    margin: 0;
+    margin-bottom: 10px;
+}
+.eventlist-date-time-container > i{
+   font-size: 30px;
+}
+.eventlist-top-info-container{
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    justify-content: flex-start;
+}
+.eventlist-top-info-container > h3{
+    margin-top: 0;
+}
+.eventlist-name-hover{
+    text-decoration: underline;
+}
+
+.fa-solid.fa-circle{
+    margin-top: 13px;
+    font-size: 4px;
 }

@@ -120,10 +120,17 @@ function CreateEventForm() {
             errorsObj.url = 'url must be jpg, jpeg or png'
         }
 
+        // let venueId;
+        // console.log('group.Venues[0].id', group)
+        // const venueIdPopulator = () => {
+        //     if(!group.Venues.length) venueId = null
+        //     else {
+        //         venueId = group.Venues[0].id
+        //     }
 
+        // }
 
-
-
+        // venueIdPopulator()
         const requestBody = {
             venueId: parseInt(group.Venues[0].id),
             name,

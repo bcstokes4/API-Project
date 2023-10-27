@@ -7,9 +7,10 @@
   }
   body {
     margin: 0;
+    background-color: white;
   }
   .header-div {
-    border-bottom: 2px solid gray;
+    border: 2px solid gray;
   }
   .header-ul {
     display: flex;

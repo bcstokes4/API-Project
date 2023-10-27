@@ -18,8 +18,8 @@ module.exports = {
         type: 'Online',
         capacity: 100,
         price: 0,
-        startDate: "2022-11-19 18:30:00",
-        endDate: "2022-11-19 19:30:00"
+        startDate: "2022-11-19 24:00:00",
+        endDate: "2022-11-20 19:30:00"
       },
       {
         venueId: 1,
@@ -29,7 +29,7 @@ module.exports = {
         type: 'In person',
         capacity: 100,
         price: 0,
-        startDate: "2023-12-19 17:30:00",
+        startDate: "2023-12-19 12:00:00",
         endDate: "2023-12-19 18:00:00"
       },
       {

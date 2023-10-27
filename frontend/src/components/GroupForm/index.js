@@ -4,7 +4,7 @@ import { postOneGroupThunk } from '../../store/single-group';
 import { postOneGroupPictureThunk } from '../../store/single-group';
 import {useDispatch, useSelector} from 'react-redux'
 import { editOneGroupThunk } from "../../store/single-group";
-
+import { postOneVenueThunk } from "../../store/venue";
 function GroupForm({group, formAction}) {
     let user = useSelector(state => state.session.user)
     let history = useHistory()
@@ -134,6 +134,15 @@ function GroupForm({group, formAction}) {
             else {
                 try {
                     const res = await dispatch(postOneGroupThunk(requestBodyGroup))
+                    const venueReqBody = {
+                        groupId: res.id,
+                        address: '123 Demo Street',
+                        city,
+                        state,
+                        lat: 5,
+                        lng: -5
+                    }
+                    await dispatch(postOneVenueThunk(res.id, venueReqBody))
                     const requestBodyImage = {url, "preview": true}
 
                     await dispatch(postOneGroupPictureThunk(res.id, requestBodyImage))

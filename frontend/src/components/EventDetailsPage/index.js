@@ -99,15 +99,25 @@ function EventDetailsPage() {
     // DATE AND TIME
     let startDate = event.startDate.slice(0, 10)
                 let hours = new Date(event.startDate).getHours()
+                let AMorPM = hours >= 12  && hours < 24? 'PM' : 'AM'
+                if(hours === 12 || hours === 0) hours = 12
+                else {
+                    hours = AMorPM === 'PM' ? hours - 12 : hours
+                }
                 let minutes = new Date(event.startDate).getMinutes()
-                if (minutes = '0') minutes = '00'
-    let startTime = `${hours}:${minutes}:00`
+                if(minutes === 0) minutes = `${minutes}0`
+                let startTime = `${hours}:${minutes}`
 
     let endDate = event.endDate.slice(0, 10)
                 let hours2 = new Date(event.endDate).getHours()
+                let AMorPM2 = hours2 >= 12  && hours < 24? 'PM' : 'AM'
+                if(hours2 === 12 || hours2 === 0) hours = 12
+                else {
+                    hours2 = AMorPM2 === 'PM' ? hours2 - 12 : hours2
+                }
                 let minutes2 = new Date(event.endDate).getMinutes()
-                if (minutes2 = '0') minutes2 = '00'
-    let endTime = `${hours2}:${minutes2}:00`
+                if (minutes2 === 0) minutes2 = `${minutes2}0`
+    let endTime = `${hours2}:${minutes2}`
 
 
 
@@ -147,14 +157,14 @@ function EventDetailsPage() {
                         </div>
                         <div className='event-details-event-info-container'>
                             <div className='event-details-time-div'>
-                                <h3>Start: {startDate} - {startTime}</h3>
-                                <h3>End: {endDate} - {endTime}</h3>
+                                <h3>Start: {startDate} - {`${startTime}  ${AMorPM}`}</h3>
+                                <h3>End: {endDate} - {`${endTime}  ${AMorPM2}`}</h3>
                            </div>
                            <h3>Price: {event.price == 0 ? 'Free': event.price}</h3>
-                           {event.Venue && <h3>Location: {event.Venue ? `${event.Venue.address} ${event.Venue.city}, ${event.Venue.state}`: 'online'}</h3>}
+                           {event.Venue && <h3>Location: {event.Venue && event.type !== 'Online' ? `${event.Venue.address} ${event.Venue.city}, ${event.Venue.state}`: 'Online'}</h3>}
                            <h3>Type: {event.type}</h3>
 
-                        {sessionUser.id === group.Organizer.id && <button onClick={(e) => openModal()}>Delete Event</button>}
+                        {sessionUser?.id === group?.Organizer.id && <button onClick={(e) => openModal()}>Delete Event</button>}
                         </div>
 
                     </div>

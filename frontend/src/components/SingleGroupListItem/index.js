@@ -20,7 +20,9 @@ function SingleGroupListItem({group, events}) {
                 <h2>{group.name}</h2>
                 <h3>{group.city}, {group.state}</h3>
                 <p>{group.about}</p>
-            <span>{eventCount} {eventCount === 1 ? 'Event': 'Events'}</span> <span> {group.private ? ' - private': ' - public'}</span>
+                <div>
+                <span>{eventCount} {eventCount === 1 ? 'Event': 'Events'}</span> <span> {group.private ? ' - Private': ' - Public'}</span>
+                </div>
             </div>
         </div>
     )
