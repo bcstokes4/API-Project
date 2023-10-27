@@ -27,6 +27,8 @@
 
 .event-details-bottom-upper-div > img {
     width: 400px;
+    max-width: 500px;
+    max-height: 400px;
 }
 
 .event-details-group-and-location-container {
@@ -45,9 +47,68 @@
     /* padding: 5px; */
     width: 100%;
 }
+.event-details-group-info-container > img {
+    max-width: 200px;
+}
 .event-details-event-info-container {
     border: 2px solid saddlebrown;
     background-color: white;
     border-radius: 12px;
     width: 100%;
 }
+/* FOR THE DELETE EVENT MODAL */
+.delete-modal-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.7);
+    flex-direction: column;
+  }
+
+  .delete-modal-content {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 13px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+  }
+
+
+  .delete-modal-buttons-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .delete-modal-confirm-button {
+    background: #ff1154;
+    color: white;
+    margin-right: 10px;
+    border-radius: 5px;
+    width: 300px;
+    height: 50px;
+    cursor: pointer;
+    box-shadow: 2px 2px 2px black;
+    margin-bottom: 10px;
+  }
+
+  .delete-modal-revert-button {
+    /* background: #ff1154; */
+    /* color: white; */
+    margin-right: 10px;
+    border-radius: 5px;
+    width: 300px;
+    height: 35px;
+    cursor: pointer;
+    box-shadow: 2px 2px 2px black;
+    margin-bottom: 10px;
+  }

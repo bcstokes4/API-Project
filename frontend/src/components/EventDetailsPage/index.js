@@ -1,19 +1,21 @@
 import './EventDetailsPage.css'
-import { useParams } from 'react-router-dom'
-import { useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom'
+import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { getOneGroupThunk } from '../../store/single-group';
 import { getAllEventsThunk } from '../../store/events';
 import { getOneEventThunk } from '../../store/single-event';
-
+import { deleteOneEventThunk } from '../../store/events';
 
 function EventDetailsPage() {
     let { eventId } = useParams()
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const group = useSelector(state => state.singleGroup)
     const event = useSelector(state => state.singleEvent)
+    const sessionUser = useSelector((state) => state.session.user)
 
     let groupId = event.groupId
 
@@ -25,6 +27,49 @@ function EventDetailsPage() {
     useEffect(() => {
         dispatch(getOneEventThunk(eventId))
     }, [dispatch])
+
+
+     // FOR DELETE EVENT MODAL
+     const [isModalOpen, setIsModalOpen] = useState(false);
+     const modalContainerRef = useRef();
+
+     const openModal = () => {
+         setIsModalOpen(true);
+       };
+
+       const closeModal = () => {
+         setIsModalOpen(false);
+       };
+
+       // Close the modal if the click is outside the modal container
+       const handleClickOutsideModal = (e) => {
+           if (modalContainerRef.current && !modalContainerRef.current.contains(e.target)) {
+           closeModal();
+         }
+       };
+       useEffect(() => {
+         if (isModalOpen) {
+           document.addEventListener('mousedown', handleClickOutsideModal);
+         } else {
+           document.removeEventListener('mousedown', handleClickOutsideModal);
+         }
+         return () => {
+           document.removeEventListener('mousedown', handleClickOutsideModal);
+         };
+       }, [isModalOpen]);
+
+       const dispatchDelete = async (e) => {
+         e.preventDefault()
+
+         console.log('handling delete')
+         const response = await dispatch(deleteOneEventThunk(eventId))
+
+
+         if(response){
+           history.push(`/groups/${group.id}`);
+         }
+       };
+
 
     let eventCheck = Object.values(event)
     let groupCheck = Object.values(group)
@@ -64,8 +109,26 @@ function EventDetailsPage() {
                 if (minutes2 = '0') minutes2 = '00'
     let endTime = `${hours2}:${minutes2}:00`
 
+
+
     return (
         <div className='event-details-main-div'>
+            {isModalOpen && (
+        <div className="delete-modal-container" >
+          <div className="delete-modal-content" ref={modalContainerRef}>
+            <h1>Confirm Delete</h1>
+            <p>Are you sure you want to remove this group?</p>
+            <div className="delete-modal-buttons-container">
+              <button className="delete-modal-confirm-button" onClick={dispatchDelete}>
+                Yes (Delete Event)
+              </button>
+              <button className="delete-modal-revert-button" onClick={closeModal}>
+                No (Keep Event)
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
             <div className='event-details-top-div'>
                 <Link to='/events'> {"<"} Events </Link>
                 <h1>{event.name}</h1>
@@ -90,7 +153,10 @@ function EventDetailsPage() {
                            <h3>Price: {event.price == 0 ? 'Free': event.price}</h3>
                            {event.Venue && <h3>Location: {event.Venue ? `${event.Venue.address} ${event.Venue.city}, ${event.Venue.state}`: 'online'}</h3>}
                            <h3>Type: {event.type}</h3>
+
+                        {sessionUser.id === group.Organizer.id && <button onClick={(e) => openModal()}>Delete Event</button>}
                         </div>
+
                     </div>
                 </div>
 

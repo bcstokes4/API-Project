@@ -19,6 +19,59 @@ export const getAllEventsThunk = () => async (dispatch) => {
         return events
     }
 }
+export const postOneEventImage = (eventId, requestBody) => async (dispatch) => {
+    const response = await csrfFetch(`/api/events/${eventId}/images`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(requestBody)
+    })
+
+    if(response.ok){
+        const data = await response.json()
+        dispatch(getAllEventsThunk())
+        return data
+      }
+      else {
+        const errors = await response.json()
+        return errors
+      }
+}
+// DELETE EVENT THUNK
+export const deleteOneEventThunk = (eventId) => async (dispatch) => {
+    try{
+        const response = await csrfFetch(`/api/events/${eventId}`, {
+            method: 'DELETE'
+          })
+          if (response.ok) {
+            const data = await response.json()
+            dispatch(getAllEventsThunk())
+
+            return data
+        }
+    }
+    catch(e) {
+        console.error(e)
+    }
+}
+
+export const postOneEventThunk = (groupId, requestBody) => async (dispatch) => {
+    const response = await csrfFetch(`/api/groups/${groupId}/events`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(requestBody)
+      })
+
+      if(response.ok){
+        const data = await response.json()
+        dispatch(getAllEventsThunk())
+        return data
+      }
+
+      else {
+        const errors = await response.json()
+        return errors
+      }
+}
 
 const eventsReducer = (state = {}, action) => {
     switch (action.type) {

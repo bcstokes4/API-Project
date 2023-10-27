@@ -16,7 +16,7 @@ export const getOneEventThunk = (eventId) => async (dispatch) => {
 
     if (response.ok) {
         const event = await response.json()
-        
+
         dispatch(getOneEvent(event))
         return event
     } else {
