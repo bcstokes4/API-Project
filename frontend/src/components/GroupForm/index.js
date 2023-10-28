@@ -5,14 +5,15 @@ import { postOneGroupPictureThunk } from '../../store/single-group';
 import {useDispatch, useSelector} from 'react-redux'
 import { editOneGroupThunk } from "../../store/single-group";
 import { postOneVenueThunk } from "../../store/venue";
+
 function GroupForm({group, formAction}) {
     let user = useSelector(state => state.session.user)
     let history = useHistory()
     let dispatch = useDispatch()
 
-    const [location, setLocation] = useState(
-        formAction === "edit" ? group.location : ""
-      )
+    // const [location, setLocation] = useState(
+    //     formAction === "edit" ? group.location : ""
+    //   )
     const [name, setName] = useState(
         formAction === "edit" ? group.name : ""
       )
@@ -25,67 +26,12 @@ function GroupForm({group, formAction}) {
     const [visibility, setVisibility] = useState(
         formAction === "edit" ? group.visibility : ""
       )
+
+    const [city, setCity] = useState('')
+    const [state, setState] = useState('')
     const [url, setUrl] = useState('')
     const [errors, setErrors] = useState({})
     const [errorsOnSubmit, setErrorsOnSubmit] = useState({})
-
-    // console.log('group PROP', group)
-    // console.log('visibility stateVariable', visibility)
-    let locationParts = location.split(',')
-    let state = locationParts[1]
-    let city = locationParts[0]
-
-    // console.log('location', location)
-    // console.log('name', name )
-    // console.log('type', type)
-    // console.log('about', about)
-    // console.log('visibility', visibility)
-    // console.log('url', url)
-
-    // FOR USE LATER WHEN CHECKING URL TYPE!
-    // let urlParts = url.split('.')
-    // let urlEnding = url[1]
-    // console.log(urlEnding)
-
-    function isImgUrl(url) {
-        return /\.(jpg|jpeg|png|webp|avif|gif)$/.test(url)
-      }
-
-    useEffect( () => {
-        let errorsObj = {}
-        if(name.length < 2 || name.length > 60) {
-            errorsObj.name = 'Name must be 60 characters or less'
-        }
-        if(!name.length){
-            errorsObj.name = 'Name is required'
-        }
-        if((state?.length !== 2 && state?.length !== 3) || city?.length < 1) {
-            errorsObj.location = 'Location must be in the format city, state (New York, NY)'
-        }
-
-        if(!about.length) {
-            errorsObj.about = 'Description is required'
-        }
-        if(about.length < 50) {
-            errorsObj.about = 'About must be 50 characters or more'
-        }
-
-        if(!location.length){
-            errorsObj.location = 'Location is required'
-        }
-        if(type !== 'Online' && type != 'In person'){
-            errorsObj.type = 'Group Type is required'
-        }
-        if(visibility !== 'Private' && visibility !== 'Public'){
-            errorsObj.visibility = 'Visibility Type is required'
-        }
-
-        if(isImgUrl(url)){
-            errorsObj.url = 'url must be jpg, jpeg or png'
-        }
-
-        setErrors(errorsObj)
-    }, [name.length, about.length, location.length, type, visibility])
 
     //CHECK IF LOGGED IN
     if(!user) {
@@ -95,7 +41,8 @@ function GroupForm({group, formAction}) {
     }
 
     const resetVariables = () => {
-            setLocation('')
+            setCity('')
+            setState('')
             setName('')
             setType('')
             setAbout('')
@@ -104,8 +51,47 @@ function GroupForm({group, formAction}) {
             setErrors({})
             setErrorsOnSubmit({})
     }
+     function isImgUrl(url) {
+        const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.avif', '.gif'];
+        const lowerCaseUrl = url.toLowerCase();
+
+        return imageExtensions.some(extension => lowerCaseUrl.includes(extension));
+    }
 
     const onSubmit = async (e) => {
+
+
+        let errorsObj = {}
+        if(name.length < 2 || name.length > 60) {
+            errorsObj.name = 'Name must be 60 characters or less'
+        }
+        if(!name.length){
+            errorsObj.name = 'Name is required'
+        }
+        if(!about.length) {
+            errorsObj.about = 'Description is required'
+        }
+        if(about.length < 50) {
+            errorsObj.about = 'About must be 50 characters or more'
+        }
+
+        if(!city.length || !state){
+            errorsObj.location = 'Location is required'
+        }
+        if(type !== 'Online' && type != 'In person'){
+            errorsObj.type = 'Group Type is required'
+        }
+        if(visibility !== 'Private' && visibility !== 'Public'){
+            errorsObj.visibility = 'Visibility Type is required'
+        }
+        if(!isImgUrl(url)){
+            errorsObj.url = 'url must be jpg, jpeg or png'
+        }
+
+        setErrors(errorsObj)
+
+
+
         e.preventDefault()
 
         const requestBodyGroup = {
@@ -117,12 +103,18 @@ function GroupForm({group, formAction}) {
               state
         }
 
-        if(!Object.values(errors).length){
+        // Check for errors
+    if (Object.keys(errorsObj).length > 0) {
+        setErrorsOnSubmit({ ...errorsObj });
+    } else {
+        setErrorsOnSubmit({});
+    }
+
+        if(!Object.values(errorsObj).length){
 
             if(formAction === 'edit'){
                 try{
                     const res = await dispatch(editOneGroupThunk(group.id, requestBodyGroup))
-                    resetVariables()
                     history.push(`/groups/${res.id}`)
                 }
                 catch(e) {
@@ -158,7 +150,7 @@ function GroupForm({group, formAction}) {
         }
 
 
-        setErrorsOnSubmit({...errors})
+
 
 
       }
@@ -175,11 +167,78 @@ function GroupForm({group, formAction}) {
                     <p>Meetup groups meet locally, in person and online. We'll connect you with people in your area, and more can join you online.</p>
                     <input type='text'
                     className='group-form-location-input'
-                    placeholder='City, STATE'
-                    value={location}
-                    onChange={ e => setLocation(e.target.value)}
+                    placeholder='City'
+                    value={city}
+                    onChange={ e => setCity(e.target.value)}
                     />
                 </label>
+                <select
+            type="text"
+            value={state}
+            onChange={(e) => {
+              setState(e.target.value);
+              if (!e.target.value) errors.state = "State is required";
+              else {
+                errors.state = null;
+              }
+            }}
+            placeholder="State"
+          >
+            <option value="" disabled hidden>
+              State
+            </option>
+            <option value="AL">Alabama</option>
+            <option value="AK">Alaska</option>
+            <option value="AZ">Arizona</option>
+            <option value="AR">Arkansas</option>
+            <option value="CA">California</option>
+            <option value="CO">Colorado</option>
+            <option value="CT">Connecticut</option>
+            <option value="DE">Delaware</option>
+            <option value="DC">District Of Columbia</option>
+            <option value="FL">Florida</option>
+            <option value="GA">Georgia</option>
+            <option value="HI">Hawaii</option>
+            <option value="ID">Idaho</option>
+            <option value="IL">Illinois</option>
+            <option value="IN">Indiana</option>
+            <option value="IA">Iowa</option>
+            <option value="KS">Kansas</option>
+            <option value="KY">Kentucky</option>
+            <option value="LA">Louisiana</option>
+            <option value="ME">Maine</option>
+            <option value="MD">Maryland</option>
+            <option value="MA">Massachusetts</option>
+            <option value="MI">Michigan</option>
+            <option value="MN">Minnesota</option>
+            <option value="MS">Mississippi</option>
+            <option value="MO">Missouri</option>
+            <option value="MT">Montana</option>
+            <option value="NE">Nebraska</option>
+            <option value="NV">Nevada</option>
+            <option value="NH">New Hampshire</option>
+            <option value="NJ">New Jersey</option>
+            <option value="NM">New Mexico</option>
+            <option value="NY">New York</option>
+            <option value="NC">North Carolina</option>
+            <option value="ND">North Dakota</option>
+            <option value="OH">Ohio</option>
+            <option value="OK">Oklahoma</option>
+            <option value="OR">Oregon</option>
+            <option value="PA">Pennsylvania</option>
+            <option value="RI">Rhode Island</option>
+            <option value="SC">South Carolina</option>
+            <option value="SD">South Dakota</option>
+            <option value="TN">Tennessee</option>
+            <option value="TX">Texas</option>
+            <option value="UT">Utah</option>
+            <option value="VT">Vermont</option>
+            <option value="VA">Virginia</option>
+            <option value="WA">Washington</option>
+            <option value="WV">West Virginia</option>
+            <option value="WI">Wisconsin</option>
+            <option value="WY">Wyoming</option>
+          </select>
                 {errorsOnSubmit?.location && <p className='group-form-errors'>{errorsOnSubmit.location}</p>}
                 <label>
                     <h3>What will your group's name be?</h3>
@@ -262,6 +321,7 @@ function GroupForm({group, formAction}) {
 
     )
 }
+
 
 
 

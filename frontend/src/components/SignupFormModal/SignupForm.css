@@ -1,3 +1,42 @@
 .errors{
     color: red
 }
+.signup-form-main-container {
+    /* border: 2px solid rebeccapurple; */
+    width: 500px;
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 35px;
+    padding: 20px;
+}
+.signup-form-container {
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+}
+.signup-form-container > * > * {
+    width: 98.5%;
+    height: 25px;
+}
+.signup-form-container > * > *:hover{
+    cursor: pointer;
+}
+
+.signup-button{
+    height: 35px;
+    margin-top: 20px;
+}
+.signup-button:hover{
+    cursor: pointer;
+}
+.signup-button.disabled:hover{
+    cursor: auto;
+}
+
+.signup-errors{
+    color: red;
+}

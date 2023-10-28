@@ -31,7 +31,7 @@ function CreateEventForm() {
         setName('')
         setType('')
         setVisibility('')
-        setPrice('')
+        setPrice(0)
         setStartDate('')
         setEndDate('')
         setDescription('')
@@ -45,48 +45,14 @@ function CreateEventForm() {
     }, [dispatch, groupId])
 
     function isImgUrl(url) {
-        return /\.(jpg|jpeg|png|webp|avif|gif)$/.test(url)
+        const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.avif', '.gif'];
+        const lowerCaseUrl = url.toLowerCase();
+
+        return imageExtensions.some(extension => lowerCaseUrl.includes(extension));
     }
-
-    // useEffect(() => {
-    //     let errorsObj = {}
-
-    //     if (name.length < 2 || name.length > 60) {
-    //         errorsObj.name = 'Name must be 60 characters or less'
-    //     }
-    //     if (!name.length) {
-    //         errorsObj.name = 'Name is required'
-    //     }
-    //     if (!description.length) {
-    //         errorsObj.description = 'Description is required'
-    //     }
-    //     if (description.length < 50) {
-    //         errorsObj.description = 'Description must be 50 characters or more'
-    //     }
-    //     if (type !== 'Online' && type != 'In person') {
-    //         errorsObj.type = 'Group Type is required'
-    //     }
-    //     if (visibility !== 'Private' && visibility !== 'Public') {
-    //         errorsObj.visibility = 'Visibility Type is required'
-    //     }
-
-    //     // if(!price.length) errorsObj.price = 'Price is required'
-    //     if(price < 0) errorsObj.price = 'Invalid price'
-
-    //     if(!startDate.length) errorsObj.startDate = 'Event start is required'
-    //     if(!endDate.length) errorsObj.endDate = 'Event end is required'
-
-    //     if (isImgUrl(url)) {
-    //         errorsObj.url = 'url must be jpg, jpeg or png'
-    //     }
-
-    //     setErrors(errorsObj)
-    // }, [name.length, type, visibility])
 
     const onSubmit = async (e) => {
         e.preventDefault()
-
-
 
 
         let errorsObj = {}
@@ -109,33 +75,31 @@ function CreateEventForm() {
         if (visibility !== 'Private' && visibility !== 'Public') {
             errorsObj.visibility = 'Visibility Type is required'
         }
-
-        // if(!price.length) errorsObj.price = 'Price is required'
         if(price < 0) errorsObj.price = 'Invalid price'
+        if(!price) errorsObj.price ='Price is required'
 
+        let currentDate = new Date()
+        let startDateCheck = new Date(startDate)
+        console.log('CURRDATE', currentDate)
+        console.log('STARTDATE', startDate)
+        if(startDateCheck <= currentDate) errorsObj.startDate = 'Event start must be in the future'
+
+        if(startDate > endDate){
+            errorsObj.endDate = 'Event end must be after event start'
+        }
         if(!startDate.length) errorsObj.startDate = 'Event start is required'
         if(!endDate.length) errorsObj.endDate = 'Event end is required'
 
-        if (isImgUrl(url)) {
+        if (!isImgUrl(url)) {
             errorsObj.url = 'url must be jpg, jpeg or png'
         }
 
-        // let venueId;
-        // console.log('group.Venues[0].id', group)
-        // const venueIdPopulator = () => {
-        //     if(!group.Venues.length) venueId = null
-        //     else {
-        //         venueId = group.Venues[0].id
-        //     }
 
-        // }
-
-        // venueIdPopulator()
         const requestBody = {
             venueId: parseInt(group.Venues[0].id),
             name,
             type,
-            price,
+            price: Math.floor(price * 100) / 100,
             capacity: 25,
             description,
             startDate,
@@ -210,6 +174,7 @@ function CreateEventForm() {
                     <h3>What is the price for your event?</h3>
                     <input
                         type='number'
+                        step='.01'
                         placeholder='0'
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
@@ -220,6 +185,7 @@ function CreateEventForm() {
                     <h3>When does your event start?</h3>
                     <input
                         type='datetime-local'
+                        step='900'
                         placeholder='MM/DD/YYYY HH:mm AM'
                         value={startDate}
                         onChange={(e) => setStartDate(e.target.value)}
@@ -231,6 +197,7 @@ function CreateEventForm() {
                     <h3>When does your event end?</h3>
                     <input
                         type='datetime-local'
+                        step='900'
                         placeholder='MM/DD/YYYY HH:mm AM'
                         value={endDate}
                         onChange={(e) => setEndDate(e.target.value)}

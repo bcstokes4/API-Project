@@ -110,6 +110,10 @@ html{
 }
 .section-4> button > * {
     list-style-type: none;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .section-4> button:hover{
     cursor: pointer;

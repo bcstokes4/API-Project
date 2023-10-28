@@ -1,4 +1,5 @@
 import './GroupDetailsListEvents.css'
+import { useHistory } from 'react-router-dom'
 
 function GroupDetailsListEvents({ events, groupId }) {
 
@@ -33,6 +34,12 @@ function GroupDetailsListEvents({ events, groupId }) {
         return dateB - dateA;
     });
 
+    const history = useHistory()
+    const eventDetailsRedirect = (eventId) => {
+
+        history.push(`/events/${eventId}`)
+    }
+
 
     return (
         <div className="group-details-event-list-main-container">
@@ -40,14 +47,22 @@ function GroupDetailsListEvents({ events, groupId }) {
             {futureEvents.map(event => {
                 let startDate = event.startDate.slice(0, 10)
                 let hours = new Date(event.startDate).getHours()
+                let AMorPM = hours >= 12 && hours < 24 ? 'PM' : 'AM'
+                if (hours === 12 || hours === 0) hours = 12
+                else {
+                    hours = AMorPM === 'PM' ? hours - 12 : hours
+                }
                 let minutes = new Date(event.startDate).getMinutes()
-                let startTime = `${hours}:${minutes}:00`
+                if (minutes < 10) minutes = `0${minutes}`
+                let startTime = `${hours}:${minutes}`
 
-                return <div className="group-details-future-event-div">
+                return <div className="group-details-future-event-div"
+                onClick={() => eventDetailsRedirect(event.id)}
+                >
                     <div className="group-details-future-event-top-half">
                         <img src={event.previewImage} />
                         <div className="group-details-future-event-inner-text">
-                            <h3>{startDate} {startTime}</h3>
+                            <h3>{startDate} - {startTime} {AMorPM}</h3>
                             <h3>{event.name}</h3>
                             {event.venueId ? <h3>{event.Venue.city}, {event.Venue.state}</h3> : <h3>Online</h3>}
                         </div>
@@ -61,14 +76,22 @@ function GroupDetailsListEvents({ events, groupId }) {
 
                 let startDate = event.startDate.slice(0, 10)
                 let hours = new Date(event.startDate).getHours()
+                let AMorPM = hours >= 12 && hours < 24 ? 'PM' : 'AM'
+                if (hours === 12 || hours === 0) hours = 12
+                else {
+                    hours = AMorPM === 'PM' ? hours - 12 : hours
+                }
                 let minutes = new Date(event.startDate).getMinutes()
-                let startTime = `${hours}:${minutes}:00`
+                if (minutes < 10) minutes = `0${minutes}`
+                let startTime = `${hours}:${minutes}`
 
-                return <div className="group-details-past-event-div">
+                return <div className="group-details-past-event-div"
+                onClick={() => eventDetailsRedirect(event.id)}
+                >
                     <div className="group-details-past-event-top-half">
                         <img src={event.previewImage} />
                         <div className="group-details-past-event-inner-text">
-                            <h3>{startDate} {startTime}</h3>
+                            <h3>{startDate} - {startTime} {AMorPM}</h3>
                             <h3>{event.name}</h3>
                             {event.venueId ? <h3>{event.Venue.city}, {event.Venue.state}</h3> : <h3>Online</h3>}
                         </div>

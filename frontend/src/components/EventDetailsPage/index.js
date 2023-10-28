@@ -105,7 +105,7 @@ function EventDetailsPage() {
                     hours = AMorPM === 'PM' ? hours - 12 : hours
                 }
                 let minutes = new Date(event.startDate).getMinutes()
-                if(minutes === 0) minutes = `${minutes}0`
+                if(minutes < 10) minutes = `0${minutes}`
                 let startTime = `${hours}:${minutes}`
 
     let endDate = event.endDate.slice(0, 10)
@@ -116,11 +116,11 @@ function EventDetailsPage() {
                     hours2 = AMorPM2 === 'PM' ? hours2 - 12 : hours2
                 }
                 let minutes2 = new Date(event.endDate).getMinutes()
-                if (minutes2 === 0) minutes2 = `${minutes2}0`
+                if (minutes2 < 10) minutes2 = `0${minutes2}`
     let endTime = `${hours2}:${minutes2}`
 
-
-
+          console.log('startmin', minutes)
+          console.log('endmin', minutes2)
     return (
         <div className='event-details-main-div'>
             {isModalOpen && (

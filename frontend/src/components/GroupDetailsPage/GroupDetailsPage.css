@@ -32,8 +32,10 @@
     cursor: pointer;
 }
 .group-details-events-div {
-    background-color: #CDCDCD;
+    border-top: 2px solid gray;
+    background-color: whitesmoke;
     margin-bottom: 0px;
+    padding-bottom: 20px;
 }
 
 /* for delete modal */
