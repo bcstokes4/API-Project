@@ -76,7 +76,7 @@ html{
 } */
 .s3-links {
     font-size: 25px;
-    color: navy;
+    color: black;
     font-weight: 900;
     text-decoration: none;
     text-decoration: none;
@@ -89,7 +89,7 @@ html{
 .disable-join-group-link{
     font-size: 25px;
     pointer-events: none;
-    color: white;
+    color: gray;
     text-decoration: none;
 }
 .section-4{
@@ -106,7 +106,7 @@ html{
     width: 200px;
     height: 60px;
     border-radius: 5px;
-    background-color: white;
+    background-color: whitesmoke;
 }
 .section-4> button > * {
     list-style-type: none;
@@ -118,4 +118,20 @@ html{
 .section-4> button:hover{
     cursor: pointer;
     box-shadow: 2px 2px 2px black;
+}
+
+.s3-container-1.homepage-link-hover-effects > a{
+    text-decoration: underline;
+}
+.s3-container-2.homepage-link-hover-effects > a{
+    text-decoration: underline;
+}
+.s3-container-3.homepage-link-hover-effects > a{
+    text-decoration: underline;
+}
+.section-3 > *:hover{
+    cursor: pointer;
+}
+.disable-pointer:hover{
+    cursor: auto;
 }

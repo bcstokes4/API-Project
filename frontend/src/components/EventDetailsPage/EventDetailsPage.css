@@ -2,60 +2,163 @@
     padding-left: 100px;
     padding-right: 100px;
 } */
-
 .event-details-top-div {
-    border: 3px solid rebeccapurple;
+    /* border: 3px solid rebeccapurple; */
     /* background-color: aqua; */
     padding-left: 100px;
     padding-right: 100px;
 }
 .event-details-bottom-div {
+    display: flex;
+    flex-direction: column;
     background-color: #CDCDCD;
     padding-left: 100px;
     padding-right: 100px;
+    padding-bottom: 100px;
 }
 .event-details-bottom-upper-div{
-    border: 2px solid red;
+    /* border: 2px solid red;  */
     display: flex;
     gap: 15px;
     border-radius: 12px;
     padding: 5px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    height: 450px;
 }
 .event-details-description-div{
-    border: 2px solid blue;
+    /* border: 2px solid blue; */
 }
 
 .event-details-bottom-upper-div > img {
-    width: 400px;
-    max-width: 500px;
-    max-height: 400px;
+    flex: 3;
+    /* width: 60%; */
+    /* max-width: 500px;
+    max-height: 400px; */
 }
 
 .event-details-group-and-location-container {
-    border: 2px solid yellow;
+    flex: 2;
+    /* border: 2px solid yellow; */
     width: 100%;
     display: flex;
-    gap: 5px;
+    gap: 25px;
     flex-direction: column;
 }
 .event-details-group-info-container{
-    border: 2px solid seagreen;
+    height: 25%;
+    /* border: 2px solid seagreen; */
     display: flex;
     gap: 5px;
     background-color: white;
     border-radius: 12px;
-    /* padding: 5px; */
-    width: 100%;
+    padding: 25px;
+    /* width: 100%; */
+}
+.event-details-group-info-container:hover{
+    cursor: pointer;
+    box-shadow: 4px 2px 2px black;
 }
 .event-details-group-info-container > img {
     max-width: 200px;
+    /* height: 50%; */
 }
 .event-details-event-info-container {
-    border: 2px solid saddlebrown;
+    /* border: 2px solid saddlebrown; */
     background-color: white;
     border-radius: 12px;
-    width: 100%;
+    height: 75%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 }
+.eventlist-price-div{
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+.event-details-location-div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.event-details-time-div{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.start-end-time-div > *{
+    margin: 0;
+}
+.start-end-time-div{
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+}
+.starttime-container > * {
+    margin: 0;
+}
+.endtime-container > * {
+    margin: 0;
+}
+.eventlist-icon{
+    font-size: 30px;
+    color: #ff1154;
+}
+.event-details-location-mini-div{
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+.endtime-container{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+}
+.endtime-container > i{
+    margin-bottom: 10px;
+}
+.starttime-container{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+}
+.starttime-container > i{
+    margin-bottom: 10px;
+}
+
+.delete-event-button{
+    margin-right: 20px;
+    background-color: #B2D8D8;
+    min-height: 30px;
+    min-width: 100px;
+}
+.delete-event-button:hover{
+    cursor: pointer;
+    background-color: whitesmoke;
+    box-shadow: 3px 2px 2px black;
+}
+.event-details-group-name-div{
+    margin: 0;
+    padding-top: 0;
+    padding-left: 6px;
+    gap: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.event-details-group-name-div > *{
+    margin: 0;
+}
+
 /* FOR THE DELETE EVENT MODAL */
 .delete-modal-container {
     position: fixed;

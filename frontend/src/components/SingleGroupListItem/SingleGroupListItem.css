@@ -27,3 +27,12 @@
 .grouplist-item-link {
     text-decoration: none;
 }
+.grouplist-img-hover{
+    opacity: .7;
+}
+.grouplist-name-hover{
+    text-decoration: underline;
+}
+.grouplist-container-hover{
+    /* background-color: gray; */
+}

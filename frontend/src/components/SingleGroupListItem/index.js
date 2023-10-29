@@ -1,6 +1,7 @@
 import './SingleGroupListItem.css'
 import { useHistory } from 'react-router-dom'
 import {Link} from 'react-router-dom'
+import { useState } from 'react'
 
 function SingleGroupListItem({group, events}) {
     let eventCount = 0
@@ -13,11 +14,24 @@ function SingleGroupListItem({group, events}) {
         let path = `/groups/${group.id}`
         history.push(path)
     }
+
+    const [hover, setHover] = useState(false)
+    const setHoverEffectsOn = () => {
+        setHover(true)
+    }
+    const setHoverEffectsOff = () => {
+        setHover(false)
+    }
+
     return (
-        <div className='grouplist-item-container' onClick={routeChange}>
-            <img src={group.previewImage} className='grouplist-img'/>
+        <div className={`grouplist-item-container ${hover ? 'grouplist-container-hover': ''}`}
+        onMouseEnter={setHoverEffectsOn}
+        onMouseLeave={setHoverEffectsOff}
+        onClick={routeChange}
+        >
+            <img src={group.previewImage} className={`grouplist-img ${hover ? 'grouplist-img-hover': ''}`}/>
             <div className='grouplist-item-text-container'>
-                <h2>{group.name}</h2>
+                <h2 className={hover ? 'grouplist-name-hover': ''}>{group.name}</h2>
                 <h3>{group.city}, {group.state}</h3>
                 <p>{group.about}</p>
                 <div>

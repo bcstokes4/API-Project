@@ -73,6 +73,7 @@
   }
 
   .profile-dropdown > * {
+    font-size: 15px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -86,8 +87,17 @@
   .profile-dropdown > button:hover{
     cursor: pointer;
     background-color: whitesmoke;
+    text-decoration: underline;
   }
+  .dropdown-groups:hover{
+    cursor: pointer;
+    background-color: whitesmoke;
+    text-decoration: underline;
+  }
+.dropdown-groups{
+    font-weight: 700;
 
+}
   .profile-dropdown > button {
     font-weight: 700;
     background: none;

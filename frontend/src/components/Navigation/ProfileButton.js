@@ -59,7 +59,7 @@ function ProfileButton({ user }) {
           <ul className={ulClassName} ref={ulRef}>
             <li className="li-first">Hello, {user.firstName}</li>
             <li>{user.email}</li>
-            {/* <li className = 'profile_buttons'onClick={redirectToGroups}>View Groups</li> */}
+            <li className = 'dropdown-groups'onClick={redirectToGroups}>View Groups</li>
 
             <button className="logout-button" onClick={logout}>
                 Log Out

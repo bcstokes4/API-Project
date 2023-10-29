@@ -25,12 +25,9 @@ function GroupDetailsPage() {
     const openModal = () => {
         setIsModalOpen(true);
       };
-
       const closeModal = () => {
         setIsModalOpen(false);
       };
-
-      // Close the modal if the click is outside the modal container
       const handleClickOutsideModal = (e) => {
           if (modalContainerRef.current && !modalContainerRef.current.contains(e.target)) {
           closeModal();
@@ -49,7 +46,7 @@ function GroupDetailsPage() {
 
       const dispatchDelete = async (e) => {
         e.preventDefault()
-        
+
         console.log('handling delete')
         const response = await dispatch(deleteOneGroupThunk(groupId))
 
@@ -125,7 +122,7 @@ function GroupDetailsPage() {
                         <h2>{group.name}</h2>
                         <h3>{group.city}, {group.state}</h3>
                         <span>{eventCount} {eventCount === 1 ? 'Event' : 'Events'}</span> <span> {group.private ? ' - private' : ' - public'}</span>
-                        <h4>Organized by  {organizer.firstName} {organizer.lastName}</h4>
+                        <h4>Organized by:  {organizer.firstName} {organizer.lastName}</h4>
                     </div>
                     {sessionUser && sessionUser.id !== organizer.id && (
                         <button onClick={() => alert('Feature Coming Soon...')}>

@@ -119,8 +119,9 @@ function EventDetailsPage() {
                 if (minutes2 < 10) minutes2 = `0${minutes2}`
     let endTime = `${hours2}:${minutes2}`
 
-          console.log('startmin', minutes)
-          console.log('endmin', minutes2)
+    const redirectToGroup = () => {
+      history.push(`/groups/${group.id}`)
+    }
     return (
         <div className='event-details-main-div'>
             {isModalOpen && (
@@ -148,23 +149,43 @@ function EventDetailsPage() {
                 <div className='event-details-bottom-upper-div'>
                     <img src={urlEvent} />
                     <div className='event-details-group-and-location-container'>
-                        <div className='event-details-group-info-container'>
+                        <div className='event-details-group-info-container'
+                        onClick={redirectToGroup}
+                        >
                             <img src={urlGroup} />
-                            <div>
+                            <div className='event-details-group-name-div'>
                                 <h2>{group.name}</h2>
                                 <h4>{group.private ? 'Private' : 'Public'}</h4>
                             </div>
                         </div>
                         <div className='event-details-event-info-container'>
                             <div className='event-details-time-div'>
-                                <h3>Start: {startDate} - {`${startTime}  ${AMorPM}`}</h3>
-                                <h3>End: {endDate} - {`${endTime}  ${AMorPM2}`}</h3>
+                                <i class="fa-regular fa-clock eventlist-icon"></i>
+                                <div className='start-end-time-div'>
+                                  <div className='starttime-container'>
+                                    <h3>Start: {startDate} </h3>
+                                    <i class="fa-solid fa-circle lil-dot"></i>
+                                    <h3>{`${startTime}  ${AMorPM}`}</h3>
+                                  </div>
+                                  <div className='endtime-container'>
+                                    <h3>End: {endDate}</h3>
+                                    <i class="fa-solid fa-circle lil-dot" ></i>
+                                    <h3>{`${endTime}  ${AMorPM2}`}</h3>
+                                  </div>
+                                </div>
                            </div>
-                           <h3>Price: {event.price == 0 ? 'Free': event.price}</h3>
-                           {event.Venue && <h3>Location: {event.Venue && event.type !== 'Online' ? `${event.Venue.address} ${event.Venue.city}, ${event.Venue.state}`: 'Online'}</h3>}
-                           <h3>Type: {event.type}</h3>
+                           <div className='eventlist-price-div'>
+                              <i class="fa-solid fa-dollar-sign eventlist-icon"></i>
+                              <h3>  {event.price == 0 ? 'Free': event.price}</h3>
+                           </div>
+                           <div className='event-details-location-div'>
 
-                        {sessionUser?.id === group?.Organizer.id && <button onClick={(e) => openModal()}>Delete Event</button>}
+                              {event.Venue && <div className='event-details-location-mini-div'><i class="fa-solid fa-map-pin eventlist-icon"></i> <h3> {event.Venue && event.type !== 'Online' ? `${event.Venue.address} ${event.Venue.city}, ${event.Venue.state}`: 'Online'}</h3> </div>}
+                              {event.Venue === null && <div className='event-details-location-mini-div'><i class="fa-solid fa-map-pin eventlist-icon"></i><h3> {event.type}</h3></div>}
+
+                              {sessionUser?.id === group?.Organizer.id && <button onClick={(e) => openModal()} className='delete-event-button'>Delete Event</button>}
+                           </div>
+
                         </div>
 
                     </div>
