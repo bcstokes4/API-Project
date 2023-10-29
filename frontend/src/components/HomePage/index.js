@@ -51,7 +51,10 @@ function HomePage() {
                 >
                     <img src={img1} className='section-3-images'/>
                     <Link to='/groups' className='s3-links'>See all groups</Link>
-                    <p>placeholder text blablabla</p>
+                    <p>
+                        Explore a vibrant community of like-minded individuals on Mingle.
+                        Browse and discover a wide array of groups, each with its own unique interests and activities.
+                    </p>
                 </div>
                 <div className={`s3-container-2 ${hover2 ? 'homepage-link-hover-effects' : ''}`}
                 onClick={() => redirect('/events')}
@@ -60,7 +63,10 @@ function HomePage() {
                 >
                     <img src={img2} className='section-3-images'/>
                     <Link className='s3-links' to='/events'>Find an event</Link>
-                    <p>placeholder text blablabla</p>
+                    <p>
+                        Dive into a world of exciting events and activities hosted by Mingle's dynamic community.
+                        Whether it's a cultural gathering, a sports match, or an educational workshop, you can easily find the perfect event to attend.
+                    </p>
                 </div>
                 <div className={`s3-container-3 ${sessionUser && hover3 ? 'homepage-link-hover-effects' : 'disable-pointer'}`}
                 onClick={() => sessionUser && redirect('/groups/new')}
@@ -69,7 +75,10 @@ function HomePage() {
                 >
                     <img src={img3} className='section-3-images'/>
                     <Link to='/groups/new' className={`s3-links ${joinGroupDisable}`}>Start a new group</Link>
-                    <p>placeholder text blablabla</p>
+                    <p>
+                        {sessionUser ? `From hobby enthusiasts to change-makers, this is your platform to foster connections, spark conversations, and make your mark on the world.
+                        Take the first step towards building your unique community today!` : `Log in or sign up to start using Mingle today!`}
+                    </p>
                 </div>
             </div>
             <div className='section-4'>

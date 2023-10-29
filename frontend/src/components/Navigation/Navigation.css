@@ -10,7 +10,9 @@
     background-color: white;
   }
   .header-div {
-    border: 2px solid gray;
+    border-bottom: 2px solid gray;
+    margin-bottom: 0px;
+    /* padding-bottom: 0; */
   }
   .header-ul {
     display: flex;
@@ -21,6 +23,9 @@
 
     /* flex-direction: row; */
     list-style-type: none;
+  }
+  .header-ul > div > a{
+    color: #ff1154;
   }
   .Mingle-logo {
     color: #ff1154;

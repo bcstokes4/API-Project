@@ -1,0 +1,68 @@
+.create-event-main-container{
+    background-color: whitesmoke;
+    padding-top: 20px;
+    padding-left: 300px;
+    padding-right: 300px;
+}
+.event-form-name-div{
+    border-bottom: 2px solid gray;
+    padding-bottom: 20px;
+}
+.event-form-type-price-div{
+    border-bottom: 2px solid gray;
+    padding-bottom: 20px;
+}
+.event-form-date-div{
+    border-bottom: 2px solid gray;
+    padding-bottom: 20px;
+}
+.event-form-url-div{
+    border-bottom: 2px solid gray;
+    padding-bottom: 20px;
+}
+.event-form-description-div{
+    border-bottom: 2px solid gray;
+    padding-bottom: 20px;
+
+}
+.event-form-submit-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 30px;
+    padding-bottom: 60px;
+}
+.event-form-submit-button > button{
+    width: 150px;
+    height: 50px;
+    background-color: #B2D8D8;
+}
+.event-form-submit-button > button:hover{
+    cursor: pointer;
+    background-color: whitesmoke;
+    box-shadow: 3px 2px 2px black;
+}
+.event-form-input{
+    height: 25px;
+    background-color: #B2D8D8;
+    border: 2px solid black;
+    /* color: black; */
+}
+.event-form-input:hover{
+    cursor: pointer;
+}.event-form-select:hover{
+    cursor: pointer;
+}
+.event-form-select{
+    height: 31px;
+    width: 110px;
+    background-color: #B2D8D8;
+    border: 2px solid black;
+    /* color: black; */
+}
+.event-form-input::placeholder {
+    /* color: black; */
+  }
+  .textbox{
+    height: 200px;
+}

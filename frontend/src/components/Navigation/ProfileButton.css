@@ -94,9 +94,16 @@
     background-color: whitesmoke;
     text-decoration: underline;
   }
+  .dropdown-events:hover{
+    cursor: pointer;
+    background-color: whitesmoke;
+    text-decoration: underline;
+  }
 .dropdown-groups{
     font-weight: 700;
-
+}
+.dropdown-events{
+    font-weight: 700;
 }
   .profile-dropdown > button {
     font-weight: 700;

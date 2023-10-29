@@ -47,6 +47,7 @@ function App() {
         <Route path='/events'>
             <EventsListPage/>
         </Route>
+        <h1>Page not found</h1>
         </Switch>}
     </>
   );

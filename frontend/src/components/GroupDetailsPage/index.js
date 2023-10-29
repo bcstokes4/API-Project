@@ -60,8 +60,16 @@ function GroupDetailsPage() {
     const events = Object.values(eventsObj)
 
     useEffect(() => {
-        dispatch(getOneGroupThunk(groupId))
-        dispatch(getAllEventsThunk())
+       const initialFetch = async() => {
+        try {
+          await dispatch(getOneGroupThunk(groupId))
+          await dispatch(getAllEventsThunk())
+        }
+        catch(error) {
+          history.push('/groups')
+        }
+       }
+       initialFetch()
     }, [dispatch, groupId])
 
     const updateGroupRedirect = (e) => {
@@ -93,6 +101,11 @@ function GroupDetailsPage() {
             url = obj.url
         }
     }
+
+    // const redirectToGroups = () => {
+    //   history.push('/groups')
+    // }
+
     let organizer = group.Organizer
     return (
         <div className='group-details-main-div'>
@@ -102,10 +115,10 @@ function GroupDetailsPage() {
             <h1>Confirm Delete</h1>
             <p>Are you sure you want to remove this group?</p>
             <div className="delete-modal-buttons-container">
-              <button className="delete-modal-confirm-button" onClick={dispatchDelete}>
+              <button className="delete-modal-confirm-button" id='testing' onClick={dispatchDelete}>
                 Yes (Delete Group)
               </button>
-              <button className="delete-modal-revert-button" onClick={closeModal}>
+              <button className="delete-modal-revert-button" id='testing2' onClick={closeModal}>
                 No (Keep Group)
               </button>
             </div>
@@ -125,14 +138,17 @@ function GroupDetailsPage() {
                         <h4>Organized by:  {organizer.firstName} {organizer.lastName}</h4>
                     </div>
                     {sessionUser && sessionUser.id !== organizer.id && (
-                        <button onClick={() => alert('Feature Coming Soon...')}>
+                        <div className='join-group-button'>
+                          <button onClick={() => alert('Feature Coming Soon...')}>
                             Join this group
-                        </button>)}
+                          </button>
+                        </div>
+                        )}
                     {sessionUser && sessionUser.id === organizer.id && (
                         <div className='organizer-group-buttons-container'>
                             <button onClick={(e) => createEventRedirect(e) }>Create Event</button>
-                            <button onClick={(e) => updateGroupRedirect(e) }>Update</button>
-                            <button onClick={(e) => openModal()}>Delete</button>
+                            <button onClick={(e) => updateGroupRedirect(e) }>Update Group</button>
+                            <button onClick={(e) => openModal()}>Delete Group</button>
                         </div>
 
                     )}

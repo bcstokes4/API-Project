@@ -48,6 +48,10 @@ function ProfileButton({ user }) {
     setShowMenu(false);
     history.push('/groups')
   }
+  const redirectToEvents = (e) =>  {
+    setShowMenu(false);
+    history.push('/events')
+  }
 
   return (
     <>
@@ -59,7 +63,8 @@ function ProfileButton({ user }) {
           <ul className={ulClassName} ref={ulRef}>
             <li className="li-first">Hello, {user.firstName}</li>
             <li>{user.email}</li>
-            <li className = 'dropdown-groups'onClick={redirectToGroups}>View Groups</li>
+            <li className="dropdown-events" onClick={redirectToEvents}>View Events</li>
+            <li className ='dropdown-groups' onClick={redirectToGroups}>View Groups</li>
 
             <button className="logout-button" onClick={logout}>
                 Log Out

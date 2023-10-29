@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { csrfFetch } from '../../store/csrf';
 import { postOneEventThunk } from '../../store/events';
 import { postOneEventImage } from '../../store/events';
-
+import './CreateEventForm.css'
 
 function CreateEventForm() {
 
@@ -41,7 +41,15 @@ function CreateEventForm() {
     }
 
     useEffect(() => {
-        dispatch(getOneGroupThunk(groupId))
+        const initialFetch = async() => {
+            try {
+              await dispatch(getOneGroupThunk(groupId))
+            }
+            catch(error) {
+              history.push('/groups')
+            }
+           }
+           initialFetch()
     }, [dispatch, groupId])
 
     function isImgUrl(url) {
@@ -75,23 +83,22 @@ function CreateEventForm() {
         if (visibility !== 'Private' && visibility !== 'Public') {
             errorsObj.visibility = 'Visibility Type is required'
         }
-        if(price < 0) errorsObj.price = 'Invalid price'
-        if(!price) errorsObj.price ='Price is required'
+        if (price < 0) errorsObj.price = 'Invalid price'
+        if (!price) errorsObj.price = 'Price is required'
 
         let currentDate = new Date()
         let startDateCheck = new Date(startDate)
-        console.log('CURRDATE', currentDate)
-        console.log('STARTDATE', startDate)
-        if(startDateCheck <= currentDate) errorsObj.startDate = 'Event start must be in the future'
 
-        if(startDate > endDate){
+        if (startDateCheck <= currentDate) errorsObj.startDate = 'Event start must be in the future'
+
+        if (startDate > endDate) {
             errorsObj.endDate = 'Event end must be after event start'
         }
-        if(!startDate.length) errorsObj.startDate = 'Event start is required'
-        if(!endDate.length) errorsObj.endDate = 'Event end is required'
+        if (!startDate.length) errorsObj.startDate = 'Event start is required'
+        if (!endDate.length) errorsObj.endDate = 'Event end is required'
 
         if (!isImgUrl(url)) {
-            errorsObj.url = 'url must be jpg, jpeg or png'
+            errorsObj.url = 'Url must be jpg, jpeg or png'
         }
 
 
@@ -105,46 +112,53 @@ function CreateEventForm() {
             startDate,
             endDate
         }
-        const imageReqBody = {url, preview: true}
-        if(!Object.values(errorsObj).length){
+        const imageReqBody = { url, preview: true }
+        if (!Object.values(errorsObj).length) {
 
-            try{
+            try {
                 const attempt = await dispatch(postOneEventThunk(groupId, requestBody))
                 await dispatch(postOneEventImage(attempt.id, imageReqBody))
                 resetVariables()
                 history.push(`/events/${attempt.id}`);
             }
-            catch{
+            catch {
 
             }
         }
 
-        setErrorsOnSubmit({...errorsObj})
+        setErrorsOnSubmit({ ...errorsObj })
     }
 
     // MAKING SURE YOU CANT TYPE IN PATH TO GET HERE WITHOUT PROPER AUTHORIZATION
     if (!sessionUser || !group || sessionUser.id !== group.organizerId) {
-        return <h1>You can't be here!!!!</h1>;
+        return history.push(`/groups/${groupId}`);
     }
 
     return (
         <div className='create-event-main-container'>
             <form className='create-event-form' onSubmit={onSubmit}>
-                <h1>Create an event for {group.name}</h1>
-                <label className='event-name-label'>
-                    <h3>What is the name of your event?</h3>
-                    <input
-                        type='text'
-                        placeholder='Event Name'
-                        onChange={(e) => setName(e.target.value)}
-                    ></input>
-                </label>
-                {errorsOnSubmit?.name && <p className='group-form-errors'>{errorsOnSubmit.name}</p>}
+                <div className='event-form-name-div'>
+                    <h1>Create an event for {group.name}</h1>
+                    <label className='event-name-label'>
+                        <h3>What is the name of your event?</h3>
+                    {errorsOnSubmit?.name && <p className='group-form-errors'>{errorsOnSubmit.name}</p>}
+                        <input
+                            type='text'
+                            placeholder='Event Name'
+                            className='event-form-input'
+                            onChange={(e) => setName(e.target.value)}
+                        ></input>
+                    </label>
+                </div>
+
+                <div className='event-form-type-price-div'>
                 <label className='event-type-label'>
                     <h3>Is this an in person or online event?</h3>
+                    {errorsOnSubmit?.type && <p className='group-form-errors'>{errorsOnSubmit.type}</p>}
                     <select
                         placeholder='(select one)'
                         value={type}
+                        className='event-form-select'
                         onChange={(e) => setType(e.target.value)}
                     >
                         <option value="" disabled hidden>
@@ -154,12 +168,13 @@ function CreateEventForm() {
                         <option value='In person'>In person</option>
                     </select>
                 </label>
-                {errorsOnSubmit?.type && <p className='group-form-errors'>{errorsOnSubmit.type}</p>}
                 <label className='event-visibility-label'>
                     <h3>Is this event private or public?</h3>
+                    {errorsOnSubmit?.visibility && <p className='group-form-errors'>{errorsOnSubmit.visibility}</p>}
                     <select
                         placeholder='(select one)'
                         value={visibility}
+                        className='event-form-select'
                         onChange={(e) => setVisibility(e.target.value)}
                     >
                         <option value="" disabled hidden>
@@ -169,64 +184,81 @@ function CreateEventForm() {
                         <option value='Public'>Public</option>
                     </select>
                 </label>
-                {errorsOnSubmit?.visibility && <p className='group-form-errors'>{errorsOnSubmit.visibility}</p>}
                 <label className='event-price-label'>
                     <h3>What is the price for your event?</h3>
+                    {errorsOnSubmit?.price && <p className='group-form-errors'>{errorsOnSubmit.price}</p>}
                     <input
                         type='number'
                         step='.01'
                         placeholder='0'
                         value={price}
+                        className='event-form-input'
                         onChange={(e) => setPrice(e.target.value)}
                     ></input>
                 </label>
-                {errorsOnSubmit?.price && <p className='group-form-errors'>{errorsOnSubmit.price}</p>}
-                <label className='event-startDate-label'>
+                </div>
+
+               <div className='event-form-date-div'>
+               <label className='event-startDate-label'>
                     <h3>When does your event start?</h3>
+                    {errorsOnSubmit?.startDate && <p className='group-form-errors'>{errorsOnSubmit.startDate}</p>}
                     <input
                         type='datetime-local'
                         step='900'
                         placeholder='MM/DD/YYYY HH:mm AM'
                         value={startDate}
+                        className='event-form-input'
                         onChange={(e) => setStartDate(e.target.value)}
                         onClick={(e) => setStartDate(e.target.value)}
                     ></input>
                 </label>
-                {errorsOnSubmit?.startDate && <p className='group-form-errors'>{errorsOnSubmit.startDate}</p>}
                 <label className='event-endDate-label'>
                     <h3>When does your event end?</h3>
+                    {errorsOnSubmit?.endDate && <p className='group-form-errors'>{errorsOnSubmit.endDate}</p>}
                     <input
                         type='datetime-local'
                         step='900'
                         placeholder='MM/DD/YYYY HH:mm AM'
                         value={endDate}
+                        className='event-form-input'
                         onChange={(e) => setEndDate(e.target.value)}
                         onClick={(e) => setEndDate(e.target.value)}
                     ></input>
                 </label>
-                {errorsOnSubmit?.endDate && <p className='group-form-errors'>{errorsOnSubmit.endDate}</p>}
+               </div>
+
+                <div className='event-form-url-div'>
                 <label className='event-url-label'>
                     <h3>Please add in image url for your event below:</h3>
+                    {errorsOnSubmit?.url && <p className='group-form-errors'>{errorsOnSubmit.url}</p>}
                     <input
                         type='text'
                         placeholder='Image Url'
                         value={url}
+                        className='event-form-input'
                         onChange={(e) => setUrl(e.target.value)}
                     ></input>
                 </label>
-                {errorsOnSubmit?.url && <p className='group-form-errors'>{errorsOnSubmit.url}</p>}
+                </div>
+
+                <div className='event-form-description-div'>
                 <label className='event-description-label'>
                     <h3>Please describe your event:</h3>
+                    {errorsOnSubmit?.description && <p className='group-form-errors'>{errorsOnSubmit.description}</p>}
                     <textarea
                         rows='10'
                         cols='50'
                         placeholder='Please write at least 50 characters'
                         value={description}
+                        className='event-form-input textbox'
                         onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
                 </label>
-                {errorsOnSubmit?.description && <p className='group-form-errors'>{errorsOnSubmit.description}</p>}
-                <button type='submit'>Create Event</button>
+                </div>
+
+                <div className='event-form-submit-button'>
+                    <button type='submit'>Create Event</button>
+                </div>
             </form>
         </div>
     )

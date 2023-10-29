@@ -1,0 +1,73 @@
+/* .create-group-form{
+background-color: whitesmoke;
+} */
+.group-form-location-div{
+    border-bottom: 2px solid gray;
+    border-top: 2px solid gray;
+    padding-bottom: 20px;
+}
+.group-form-name-div{
+    border-bottom: 2px solid gray;
+    padding-bottom: 20px;
+}
+.group-form-about-div{
+    border-bottom: 2px solid gray;
+    padding-bottom: 20px;
+}
+.group-form-final-part-div{
+    border-bottom: 2px solid gray;
+    padding-bottom: 20px;
+}
+.group-form-name-input{
+    width: 170px;
+}
+
+.group-form-input::placeholder {
+    color: black;
+  }
+.group-form-input{
+    height: 25px;
+    background-color: #B2D8D8;
+    border: 2px solid black;
+    color: black;
+}
+.group-form-input:hover{
+    cursor: pointer;
+}
+.group-form-input-placeholder{
+    color: black;
+}
+.group-form-select{
+    height: 31px;
+    width: 110px;
+    background-color: #B2D8D8;
+    border: 2px solid black;
+    color: black;
+}
+.group-form-select:hover{
+    cursor: pointer;
+}
+.group-form-select-placeholder{
+    color: black;
+}
+.textbox{
+    height: 200px;
+}
+
+.group-form-button-div{
+    padding-top: 30px;
+    padding-bottom: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.group-form-button-div > button{
+    width: 150px;
+    height: 50px;
+    background-color: #B2D8D8;
+}
+.group-form-button-div > button:hover{
+    cursor: pointer;
+    background-color: whitesmoke;
+    box-shadow: 3px 2px 2px black;
+}

@@ -5,6 +5,7 @@
     border-top: 2px solid grey;
     gap: 18px;
     max-width: 600px;
+    word-wrap: break-word;
 }
 .eventlist-item-top-container{
     display: flex;

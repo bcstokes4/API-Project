@@ -25,7 +25,15 @@ function EventDetailsPage() {
         }
     }, [dispatch, groupId])
     useEffect(() => {
-        dispatch(getOneEventThunk(eventId))
+      const initialFetch = async() => {
+        try{
+          await dispatch(getOneEventThunk(eventId))
+        }
+        catch(error){
+          history.push('/events')
+        }
+      }
+      initialFetch()
     }, [dispatch])
 
 
@@ -182,10 +190,11 @@ function EventDetailsPage() {
 
                               {event.Venue && <div className='event-details-location-mini-div'><i class="fa-solid fa-map-pin eventlist-icon"></i> <h3> {event.Venue && event.type !== 'Online' ? `${event.Venue.address} ${event.Venue.city}, ${event.Venue.state}`: 'Online'}</h3> </div>}
                               {event.Venue === null && <div className='event-details-location-mini-div'><i class="fa-solid fa-map-pin eventlist-icon"></i><h3> {event.type}</h3></div>}
-
-                              {sessionUser?.id === group?.Organizer.id && <button onClick={(e) => openModal()} className='delete-event-button'>Delete Event</button>}
                            </div>
-
+                            <div className='event-details-buttons'>
+                            {sessionUser?.id === group?.Organizer.id && <button onClick={() => alert('Feature Coming Soon...')} className='delete-event-button'>Update Event</button>}
+                              {sessionUser?.id === group?.Organizer.id && <button onClick={(e) => openModal()} className='delete-event-button'>Delete Event</button>}
+                            </div>
                         </div>
 
                     </div>

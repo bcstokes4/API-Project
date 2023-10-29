@@ -18,7 +18,7 @@ function SingleEventListItem({event}) {
                     hours = AMorPM === 'PM' ? hours - 12 : hours
                 }
                 let minutes = new Date(event.startDate).getMinutes()
-                if(minutes === 0) minutes = `${minutes}0`
+                if(minutes === 0 || minutes < 10) minutes = `0${minutes}`
                 let startTime = `${hours}:${minutes}`
 
     const [hover, setHover] = useState(false)
@@ -44,7 +44,7 @@ function SingleEventListItem({event}) {
                         <h4>{startDate}</h4><i class="fa-solid fa-circle" style={{ color: "teal" }}></i><h4>{`${startTime}  ${AMorPM}`}</h4>
                     </div>
                     <h3 className={hover ? 'eventlist-name-hover': ''}>{event.name}</h3>
-                    {event.venueId ? <h3>{event.Venue.city}, {event.Venue.state}</h3>: <h3>Online</h3>}
+                    {event.venueId && event.type !== 'Online' ? <h4>{event.Venue.city}, {event.Venue.state}</h4>: <h4>Online</h4>}
                 </div>
             </div>
             <p>{event.description}</p>

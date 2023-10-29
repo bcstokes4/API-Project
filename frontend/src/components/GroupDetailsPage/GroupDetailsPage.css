@@ -5,6 +5,8 @@
     gap: 50px;
     justify-content: center;
     padding-top: 20px;
+    padding-bottom: 20px;
+
 }
 .group-details-top-image-div {
     display: flex;
@@ -16,20 +18,49 @@
     width: 500px;
     height: 300px;
 }
-
+.group-details-top-image-div > a{
+  color: #ff1154;
+}
+#testing{
+  background-color: #B2D8D8;
+  box-shadow: none;
+  color: black;
+  font-weight: 800;
+}
+#testing2{
+  /* background-color: #B2D8D8; */
+  box-shadow: none;
+  color: black;
+  font-weight: 800;
+}
+#testing2:hover{
+  box-shadow: 2px 2px 2px black;
+  /* background-color: #ff1154; */
+}
+#testing:hover{
+  box-shadow: 2px 2px 2px black;
+  background-color: #ff1154;
+}
 .group-details-top-text-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
-.group-details-top-text-container > button {
-    background-color: red;
-    height: 50px;
-    border-radius: 5px;
-    box-shadow: 2px 2px ;
+.join-group-button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.group-details-top-text-container > button:hover {
+.join-group-button > button {
+    background-color: #ff1154;
+    height: 40px;
+    width: 120px;
+    border-radius: 5px;
+}
+.join-group-button > button:hover {
     cursor: pointer;
+    box-shadow: 2px 2px 2px black;
+    background-color: whitesmoke;
 }
 .group-details-events-div {
     border-top: 2px solid gray;
@@ -38,7 +69,21 @@
     padding-bottom: 20px;
     min-height: 300px;
 }
-
+.organizer-group-buttons-container{
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+.organizer-group-buttons-container > *{
+  background-color: #B2D8D8;
+  min-height: 30px;
+  min-width: 100px;
+}
+.organizer-group-buttons-container > *:hover{
+  cursor: pointer;
+  background-color: whitesmoke;
+  box-shadow: 3px 2px 2px black;
+}
 /* for delete modal */
 .delete-modal-container {
     position: fixed;
@@ -73,25 +118,24 @@
   }
 
   .delete-modal-confirm-button {
-    background: #ff1154;
+    background-color: #B2D8D8;
     color: white;
     margin-right: 10px;
     border-radius: 5px;
     width: 300px;
     height: 50px;
     cursor: pointer;
-    box-shadow: 2px 2px 2px black;
+    /* box-shadow: 2px 2px 2px black; */
     margin-bottom: 10px;
   }
 
   .delete-modal-revert-button {
-    /* background: #ff1154; */
-    /* color: white; */
+
     margin-right: 10px;
     border-radius: 5px;
     width: 300px;
     height: 35px;
     cursor: pointer;
-    box-shadow: 2px 2px 2px black;
+    /* box-shadow: 2px 2px 2px black; */
     margin-bottom: 10px;
   }

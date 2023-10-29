@@ -5,13 +5,21 @@
     background-color: white;
     border-radius: 7px;
     padding: 8px;
+    word-wrap: break-word;
+}
+.group-details-future-event-div:hover{
+    box-shadow: 4px 4px 2px darkgray;
 }
 .group-details-past-event-div{
-    /* border: 1px solid red; */
+    border: 1px solid gray;
     width: 45%;
     background-color: white;
     border-radius: 7px;
     padding: 8px;
+    word-wrap: break-word;
+}
+.group-details-past-event-div:hover{
+    box-shadow: 4px 4px 2px darkgray;
 }
 
 .group-details-event-list-main-container{
@@ -29,13 +37,65 @@
     display: flex;
     gap: 10px;
 }
+.group-details-future-event-top-half>img{
+    width: 33%;
+    min-height: 150px;
+}
 .group-details-past-event-top-half{
     display: flex;
     gap: 10px;
+}
+.group-details-past-event-top-half>img{
+    width: 33%;
+    height: 150px;
 }
 .group-details-future-event-div:hover{
     cursor: pointer;
 }
 .group-details-past-event-div:hover{
     cursor: pointer;
+}
+.group-details-future-event-inner-text > div > i{
+    margin-bottom: 15px;
+}
+.group-details-past-event-inner-text > div > i{
+    margin-bottom: 15px;
+}
+.group-details-past-event-inner-text{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.group-details-past-event-inner-text > *{
+    margin: 0;
+}
+.group-details-time-date-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+.group-details-time-date-div2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.group-details-time-date-div > *{
+    margin: 0;
+}
+.group-details-future-event-inner-text{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+.group-details-future-event-inner-text > *{
+    margin: 0;
+    gap: 10px;
 }

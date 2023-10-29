@@ -62,7 +62,11 @@ function GroupDetailsListEvents({ events, groupId }) {
                     <div className="group-details-future-event-top-half">
                         <img src={event.previewImage} />
                         <div className="group-details-future-event-inner-text">
-                            <h3>{startDate} <i class="fa-solid fa-circle" style={{ color: "teal" }}></i> {startTime} {AMorPM}</h3>
+                            <div className='group-details-time-date-div'>
+                                <h3>{startDate}</h3>
+                                <i class="fa-solid fa-circle" ></i>
+                                <h3>{startTime} {AMorPM}</h3>
+                            </div>
                             <h3>{event.name}</h3>
                             {event.venueId ? <h3>{event.Venue.city}, {event.Venue.state}</h3> : <h3>Online</h3>}
                         </div>
@@ -91,7 +95,11 @@ function GroupDetailsListEvents({ events, groupId }) {
                     <div className="group-details-past-event-top-half">
                         <img src={event.previewImage} />
                         <div className="group-details-past-event-inner-text">
-                            <h3>{startDate} <i class="fa-solid fa-circle" style={{ color: "teal" }}></i> {startTime} {AMorPM}</h3>
+                            <div className='group-details-time-date-div2'>
+                                <h3>{startDate}</h3>
+                                <i class="fa-solid fa-circle" ></i>
+                                <h3>{startTime} {AMorPM}</h3>
+                            </div>
                             <h3>{event.name}</h3>
                             {event.venueId ? <h3>{event.Venue.city}, {event.Venue.state}</h3> : <h3>Online</h3>}
                         </div>
@@ -100,6 +108,8 @@ function GroupDetailsListEvents({ events, groupId }) {
                 </div>
             })
             }
+
+            {futureEvents.length < 1 && pastEvents.length < 1 && <h1>No Upcoming Events</h1>}
         </div>
     )
 }

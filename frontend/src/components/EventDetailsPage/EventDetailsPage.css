@@ -5,8 +5,13 @@
 .event-details-top-div {
     /* border: 3px solid rebeccapurple; */
     /* background-color: aqua; */
+    padding-top: 10px;
     padding-left: 100px;
     padding-right: 100px;
+    border-bottom: 2px solid gray;
+}
+.event-details-top-div > a{
+    color: #ff1154;
 }
 .event-details-bottom-div {
     display: flex;
@@ -57,7 +62,7 @@
 }
 .event-details-group-info-container:hover{
     cursor: pointer;
-    box-shadow: 4px 2px 2px black;
+    box-shadow: 4px 2px 2px darkgray;
 }
 .event-details-group-info-container > img {
     max-width: 200px;
@@ -134,7 +139,11 @@
 .starttime-container > i{
     margin-bottom: 10px;
 }
-
+.event-details-buttons{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
 .delete-event-button{
     margin-right: 20px;
     background-color: #B2D8D8;

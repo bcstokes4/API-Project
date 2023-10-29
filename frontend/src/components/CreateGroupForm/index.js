@@ -1,14 +1,14 @@
 import './CreateGroupForm.css'
 import GroupForm from '../GroupForm'
 import { useSelector } from "react-redux";
+import { useHistory } from 'react-router-dom';
 
 function CreateGroupForm() {
+    const history = useHistory()
     const sessionUser = useSelector((state) => state.session.user);
 
   if (!sessionUser) {
-    return (
-        <h1>YOU CAN'T BE HERE SILLY GOOSE</h1>
-    )
+    return history.push('/groups')
   }
     return (
         <div className='group-form-main-container'>
