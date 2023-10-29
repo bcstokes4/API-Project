@@ -138,10 +138,10 @@ function EventDetailsPage() {
             <h1>Confirm Delete</h1>
             <p>Are you sure you want to remove this group?</p>
             <div className="delete-modal-buttons-container">
-              <button className="delete-modal-confirm-button" onClick={dispatchDelete}>
+              <button className="delete-modal-confirm-button" id='testing' onClick={dispatchDelete}>
                 Yes (Delete Event)
               </button>
-              <button className="delete-modal-revert-button" onClick={closeModal}>
+              <button className="delete-modal-revert-button" id='testing2' onClick={closeModal}>
                 No (Keep Event)
               </button>
             </div>

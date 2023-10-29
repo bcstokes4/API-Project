@@ -224,3 +224,23 @@
     box-shadow: 2px 2px 2px black;
     margin-bottom: 10px;
   }
+  #testing{
+    background-color: #B2D8D8;
+    box-shadow: none;
+    color: black;
+    font-weight: 800;
+  }
+  #testing2{
+    /* background-color: #B2D8D8; */
+    box-shadow: none;
+    color: black;
+    font-weight: 800;
+  }
+  #testing2:hover{
+    box-shadow: 2px 2px 2px black;
+    /* background-color: #ff1154; */
+  }
+  #testing:hover{
+    box-shadow: 2px 2px 2px black;
+    background-color: #ff1154;
+  }
