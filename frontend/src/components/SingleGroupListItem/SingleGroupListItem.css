@@ -6,6 +6,7 @@
     align-items: center;
     border-top: 2px solid grey;
     gap: 18px;
+    max-width: 600px;
 }
 .grouplist-item-text-container{
     display: flex;

@@ -43,10 +43,12 @@ function CreateEventForm() {
     useEffect(() => {
         const initialFetch = async() => {
             try {
+                if(groupId != Number(groupId)){
+                    history.push('/groups')
+                }
               await dispatch(getOneGroupThunk(groupId))
             }
             catch(error) {
-              history.push('/groups')
             }
            }
            initialFetch()

@@ -21,7 +21,7 @@ export const getOneEventThunk = (eventId) => async (dispatch) => {
         return event
     } else {
         const errorData = response.json()
-        console.error('Error', errorData)
+        // console.error('Error', errorData)
     }
 }
 

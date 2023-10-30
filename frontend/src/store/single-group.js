@@ -34,7 +34,7 @@ export const editOneGroupThunk = (groupId, reqBody) => async (dispatch) => {
         return group
     } else {
         const errorData = response.json()
-        console.error('Error', errorData)
+        // console.error('Error', errorData)
     }
 }
 
@@ -54,7 +54,7 @@ export const postOneGroupThunk = (reqBody) => async (dispatch) => {
         return group
     } else {
         const errorData = response.json()
-        console.error('Error', errorData)
+        // console.error('Error', errorData)
     }
 
 }
@@ -71,7 +71,7 @@ export const postOneGroupPictureThunk = (groupId, reqBody) => async (dispatch) =
         return group
     } else {
         const errorData = response.json()
-        console.error('Error', errorData)
+        // console.error('Error', errorData)
     }
 }
 
@@ -91,7 +91,7 @@ export const deleteOneGroupThunk = (groupId) => async (dispatch) => {
         }
     }
     catch(e) {
-        console.error(e)
+        // console.error(e)
     }
 }
 
@@ -105,7 +105,7 @@ export const getOneGroupThunk = (groupId) => async (dispatch) => {
         return group
     } else {
         const errorData = response.json()
-        console.error('Error', errorData)
+        // console.error('Error', errorData)
     }
 }
 

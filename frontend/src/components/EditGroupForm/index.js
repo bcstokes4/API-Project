@@ -14,11 +14,20 @@ function EditGroupForm() {
     const sessionUser = useSelector((state) => state.session.user);
     const groupObj = useSelector((state) => state.groups);
     const group = groupObj[groupId];
-
+    // const group = useSelector(state => state.singeGroup)
 
 
     useEffect(() => {
-        dispatch(getAllGroupsThunk())
+        const initialFetch = async() => {
+            try{
+                await dispatch(getAllGroupsThunk())
+                await dispatch(getOneGroupThunk(groupId))
+            }
+            catch(error) {
+                history.push('/groups')
+              }
+            }
+            initialFetch()
     }, [dispatch, groupId])
 
 

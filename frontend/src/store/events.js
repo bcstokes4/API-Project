@@ -50,7 +50,7 @@ export const deleteOneEventThunk = (eventId) => async (dispatch) => {
         }
     }
     catch(e) {
-        console.error(e)
+        // console.error(e)
     }
 }
 

@@ -69,7 +69,6 @@ function EventDetailsPage() {
        const dispatchDelete = async (e) => {
          e.preventDefault()
 
-         console.log('handling delete')
          const response = await dispatch(deleteOneEventThunk(eventId))
 
 
